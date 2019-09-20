@@ -32,6 +32,13 @@ function Point (xCoor, yCoor) {
 }
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    var canvas = document.getElementById("board");
+    canvas.width = this.xMax;
+    canvas.height = this.yMax;
+    context = canvas.getContext("2d");
+}, false);
+
 // Constructor for an Obstacle
 function Obstacle(image, width, height, speed, startPoint, endPoint)
 {
