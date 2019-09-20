@@ -1,7 +1,13 @@
 // World's Hardest Game, 2019
 
+// The user-controlled entity that performs actions in the game
 let player = new Player();
 
+// Global variables for the Canvas
+var context;
+var obstacles = [];
+
+// Details for the screen and its size
 let xMin = 0, xMax = 800; 
 let yMin = 0, yMax = 600;
 
@@ -25,22 +31,23 @@ function Point (xCoor, yCoor) {
     }
 }
 
-var context;
-var obstacles = [];
 
+// Constructor for an Obstacle
+function Obstacle(image, width, height, speed, startPoint, endPoint)
+{
+    this.image = image;
+    this.width = width;
+    this.height = height;
+    this.speed = speed;
+    // Both of these are Point's
+    this.startPoint = startPoint;
+    this.endPoint = endPoint;
+}
+
+// Runs on Document Load, initializes full programs
 document.addEventListener("DOMContentLoaded", function() {
     var canvas = document.getElementById("board");
     canvas.width = this.xMax;
     canvas.height = this.yMax;
     context = canvas.getContext("2d");
 }, false);
-
-function Obstacle(image, width, height, speed, startPixel, endPixel)
-{
-    this.image = image;
-    this.width = width;
-    this.height = height;
-    this.speed = speed;
-    this.startPixel = startPixel;
-    this.endPixel = endPixel;
-}
