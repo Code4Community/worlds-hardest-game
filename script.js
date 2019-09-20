@@ -23,13 +23,15 @@ function Point (xCoor, yCoor) {
         console.log("y-coordinate " + yCoor + " is out of range; yMin = " + yMin + " and yMax = " + yMax);
         return;
     }
+}
+
 var context;
 var obstacles = [];
 
 document.addEventListener("DOMContentLoaded", function() {
     var canvas = document.getElementById("board");
-    canvas.width = 800;
-    canvas.height = 600;
+    canvas.width = this.xMax;
+    canvas.height = this.yMax;
     context = canvas.getContext("2d");
 }, false);
 
@@ -42,4 +44,3 @@ function Obstacle(image, width, height, speed, startPixel, endPixel)
     this.startPixel = startPixel;
     this.endPixel = endPixel;
 }
-
