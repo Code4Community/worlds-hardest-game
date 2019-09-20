@@ -51,3 +51,11 @@ document.addEventListener("DOMContentLoaded", function() {
     canvas.height = this.yMax;
     context = canvas.getContext("2d");
 }, false);
+
+function updateObstaclePosition(obstacles)
+{
+    for(var i = 0; obstacles.length; i++)
+    {
+        
+    }
+}
