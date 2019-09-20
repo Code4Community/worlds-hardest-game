@@ -35,16 +35,15 @@ document.addEventListener("DOMContentLoaded", function() {
     context = canvas.getContext("2d");
 }, false);
 
-function Obstacle(image, width, height, speed, startPixel, endPixel)
+function Obstacle(image, width, height, speed, startPoint, endPoint)
 {
     this.image = image;
     this.width = width;
     this.height = height;
     this.speed = speed;
-    this.startPixel = startPixel;
-    this.endPixel = endPixel;
+    this.startPoint = startPoint;
+    this.endPoint = endPoint;
 }
-<<<<<<< HEAD
 
 function updateObstaclePosition(obstacles)
 {
@@ -54,5 +53,3 @@ function updateObstaclePosition(obstacles)
     }
 }
 
-=======
->>>>>>> 732546630c22c3ea42cfc1eb5a06c63e6203463b
