@@ -18,3 +18,11 @@ function Obstacle(image, width, height, speed, startPixel, endPixel)
     this.endPixel = endPixel;
 }
 
+function updateObstaclePosition(obstacles)
+{
+    for(var i = 0; obstacles.length; i++)
+    {
+        
+    }
+}
+
