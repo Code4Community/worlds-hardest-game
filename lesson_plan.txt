@@ -1,0 +1,59 @@
+Lesson Plan
+
+Code for Community at The Ohio State University (Abbreviated C4C)
+Team 2, "World's Best-est Team"
+Presenting: Introduction to Basic Programming Concepts with JavaScript
+Demonstration Program: "The World's Hardest Game"
+Based on: "The World's Hardest Game" by Stephen Critoph
+
+Expected Lesson Time: 40 Minutes
+
+Expected Number of C4C Instructors: 4
+
+Students per C4C Instructor (Optimal): 4 - 6 students
+
+Goals: 
+- Familiarize students with source code at a basic level
+- Students should have a basic understanding of what a variable is and at least one way in which it can be used
+- Students should have a basic understanding of if-statements and, by extension, the basic function of a control-structure. 
+
+Required Resources: 
+- One Desktop or Laptop computer per student (Macs and PCs are both acceptable, tablets of any type are NOT, smartphones are also insufficient)
+- Web browser on each computer
+- Internet Access
+
+Recommended Resources: 
+- Projector
+- Dry-Erase Board or Chalkboard
+
+Plan: 
+- Introduction (~5 Minutes total):
+    - C4C instructors will introduce themselves by name
+    - Students will be directed to the game and source code website
+        - This will be done with the link go.osu.edu/worldshardestgame
+    - Students will be directed how to launch the game
+- Exploration time (~10 Minutes total): 
+    - (~5 Minutes) Students will be instructed to play the game and attempt to complete the first level
+        - The first level will demonstrate the mechanics of the game
+        - This level will be easy to complete using the game controls
+        - Upon completing the first level, students will proceed to the second level
+    - (~5 Minutes) Students will attempt to complete the second level
+        - The second level will be extremely difficult to complete using the game controls
+        - This is by design; the idea is that students will have to 'cheat,' that is; modify the source code, to make the level easier
+- Explanation of basic coding concepts (~10 Minutes total): 
+    - C4C instructors will introduce the concept of a variable (using a dry-erase board or chalkboard)
+    - C4C instructors will demonstrate how changing the value of a variable affects the functionality of an example program (using the projector)
+    - C4C instructors will point out a spot in the code in which a variable is used
+        - Preliminarily, the idea is to point out an integer variable that controls the speed at which the obstacles move
+        - The implication is that the students will be able to slow down the motion of the obstacles to make the game easier    
+    - C4C Instructors will introduce the concept of an if-statement
+    - C4C instructors will demonstrate how an if-statement controls if instructions are executed in a program
+    - C4C instructors will point out a spot in the game source code in which an if statement is used
+        - Preliminarily, the idea is to nest the collision-detection code inside an if-statement
+        - The implication is that the students can modify a boolean variable to stop the collision-detection code from running
+            - This will in-turn allow the player to phase through the obstacle to win
+- Application of Concepts (~15 Minutes):
+    - Students will be 'let loose' to modify the source code
+    - Students will be expected to apply the concepts demonstrated in the C4C lecture
+    - The goal is for students to use these techniques to make the second level easy enough to complete
+    - C4C instructors will walk among the students and help them out whenever possible. 
