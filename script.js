@@ -27,38 +27,34 @@ document.addEventListener("DOMContentLoaded", function() {
     var ob1 = new Obstacle(img, 2, startPoint, endPoint);
     obstacles.push(ob1);
     window.requestAnimationFrame(gameLoop);
-}, false);
+}, false); // Do we need this optional boolean parameter?
 
 // Creates a 2D Point within the bounds of the screen
-function Point (xCoor, yCoor) {
+class Point {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
 
-    if (xCoor >= xMin && xCoor <= xMax) {
-        this.x = xCoor;
-    } 
-    else {
-        console.log("x-coordinate " + xCoor + " is out of range; xMin = " + xMin + " and xMax = " + xMax);
-        return;
-    }
-
-    if (yCoor >= yMin && yCoor <= yMax) {
-        this.y = yCoor;
-    } 
-    else {
-        console.log("y-coordinate " + yCoor + " is out of range; yMin = " + yMin + " and yMax = " + yMax);
-        return;
+        if (x < xMin || x > xMax) {
+            alert("x-coordinate " + x + " is out of range, xMin = " + xMin + " and xMax = " + xMax);
+        }
+        if (y < yMin || y > yMax) {
+            alert("y-coordinate " + y + " is out of range, yMin = " + yMin + " and yMax = " + yMax);
+        }
     }
 }
 
 // Constructor for an Obstacle
-function Obstacle(image, speed, startPoint, endPoint)
-{
-    //the this.image is an image object
-    this.image = image;
-    this.speed = speed;
-    // All of these are Point's
-    this.startPoint = startPoint;
-    this.currentPoint = new Point(0, 0);
-    this.endPoint = endPoint;
+class Obstacle {
+    constructor(image, speed, startPoint, endPoint) {
+        //the this.image is an image object
+        this.image = image;
+        this.speed = speed;
+        // All of these are Point's
+        this.startPoint = startPoint;
+        this.currentPoint = new Point(0, 0);
+        this.endPoint = endPoint;
+    }
 }
 
 function gameLoop(timeStamp)
@@ -67,7 +63,6 @@ function gameLoop(timeStamp)
     oldTimeStamp = timeStamp;
 
     updateObstaclePositions(timePassed);
-    
     window.requestAnimationFrame(gameLoop);
 }
 
