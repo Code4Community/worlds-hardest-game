@@ -59,3 +59,24 @@ function isPlayerOffPath(player)
     // If they're "all inside a rectangle", it's on the path. Therefore, this function should return that it's "not off the path", or, on the path.  
     return !areAllPointsInsideARectangle;
 }
+
+// Does exactly what it says - Functions should be as self-documenting as possible w/o needing comments 
+function isPointInsideARectangle(point)
+{
+    let isPointInsideARectangle = false;
+    // Iterates through each rectangle on the course 
+    for (let i = 0; i < obstacles.length; i++)
+    {
+        // Determining the bounds for the rectangle 
+        let obstacleMinX = obstacles[i][0];
+        let obstacleMaxX = obstacles[i][0] + obstalces[i][2];
+        let obstacleMinY = obstacles[i][1];
+        let obstacleMaxY = obstacles[i][1] + obstalces[i][3];
+        if (point.x >= obstacleMinX && point.x <= obstacleMaxX && point.y >= obstacleMinY && point.y <= obstacleMaxY)
+        {
+            isPointInsideARectangle = true;
+            break;
+        }
+    }
+    return isPointInsideARectangle;
+}
