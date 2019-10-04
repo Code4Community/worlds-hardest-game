@@ -98,13 +98,6 @@ function drawImage(image, point)
     context.drawImage(image, point.x, point.y);
 }
 
-// Makes a point class so new points can be declared with x and y properties 
-function Point(x, y) 
-{
-  this.x = x;
-  this.y = y;
-}
-
 // Used to determine if the the player shape has touched an obstacle
 function isPlayerTouchingObstacle(player, obstacle)
 {
