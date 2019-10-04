@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
     img.src = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
     var startPoint = new Point(10, 10);
     var endPoint = new Point(500, 500);
-    var ob1 = new Obstacle(img, 2, startPoint, endPoint);
+    var ob1 = new Obstacle(img, .2, .2, startPoint, endPoint);
     obstacles.push(ob1);
     window.requestAnimationFrame(gameLoop);
 }, false); // Do we need this optional boolean parameter?
@@ -46,10 +46,11 @@ class Point {
 
 // Constructor for an Obstacle
 class Obstacle {
-    constructor(image, speed, startPoint, endPoint) {
+    constructor(image, speedX, speedY, startPoint, endPoint) {
         //the this.image is an image object
         this.image = image;
-        this.speed = speed;
+        this.speedX = speedX;
+        this.speedY = speedY;
         // All of these are Point's
         this.startPoint = startPoint;
         this.currentPoint = new Point(0, 0);
@@ -71,9 +72,17 @@ function updateObstaclePositions(timePassed)
     for(var i = 0; i < obstacles.length; i++)
     {
         //calculate future position of the obstacle
-        obstacles[i].currentPoint.x += obstacles[i].speed * timePassed;
-        obstacles[i].currentPoint.y += obstacles[i].speed * timePassed;
-        if(obstacles[i].currentPoint.x > obstacles[i].startPoint.x){}
+        obstacles[i].currentPoint.x += obstacles[i].speedX * timePassed;
+        obstacles[i].currentPoint.y += obstacles[i].speedY * timePassed;
+        if(obstacles[i].currentPoint.x < obstacles[i].startPoint.x || obstacles[i].currentPoint.x > obstacles[i].endPoint.x)
+        {
+            obstacles[i].speedX *= -1;
+        }
+
+        if(obstacles[i].currentPoint.y < obstacles[i].startPoint.y || obstacles[i].currentPoint.y > obstacles[i].endPoint.y)
+        {
+            obstacles[i].speedY *= -1;
+        }
         //draw the obstacle
         drawImage(obstacles[i].image, obstacles[i].currentPoint);
     }
