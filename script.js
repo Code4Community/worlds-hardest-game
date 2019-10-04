@@ -3,6 +3,15 @@
 // The user-controlled entity that performs actions in the game
 //let player = new Player();
 
+var alek = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
+
+//Obstacle Array
+var obstacleData = [
+    //image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
+    [alek, 0, .2, 0, 1200, 10, 500, 150,  10],
+    [alek, 0, .2, 0, 1200, 10, 500, 700,  10]
+]
+
 // Global variables for the Canvas
 var context;
 var canvas;
@@ -10,8 +19,8 @@ var obstacles = [];
 var oldTimeStamp = 0.0;
 
 // Details for the screen and its size
-let xMin = 0, xMax = 800; 
-let yMin = 0, yMax = 600;
+let xMin = 0, xMax = 1200; 
+let yMin = 0, yMax = 500;
 
 // Runs on Document Load, initializes full programs
 document.addEventListener("DOMContentLoaded", function() {
@@ -19,13 +28,8 @@ document.addEventListener("DOMContentLoaded", function() {
     canvas.width = xMax;
     canvas.height = yMax;
     context = canvas.getContext("2d");
-
-    var img = new Image(20, 20);
-    img.src = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
-    var startPoint = new Point(10, 10);
-    var endPoint = new Point(500, 500);
-    var ob1 = new Obstacle(img, .2, .2, startPoint, endPoint);
-    obstacles.push(ob1);
+    parseObstacles();
+    console.log(obstacles);
     window.requestAnimationFrame(gameLoop);
 }, false); // Do we need this optional boolean parameter?
 
@@ -46,15 +50,32 @@ class Point {
 
 // Constructor for an Obstacle
 class Obstacle {
-    constructor(image, speedX, speedY, startPoint, endPoint) {
+    constructor(image, speedX, speedY, startPoint, endPoint, currentPoint) {
         //the this.image is an image object
         this.image = image;
         this.speedX = speedX;
         this.speedY = speedY;
         // All of these are Point's
         this.startPoint = startPoint;
-        this.currentPoint = new Point(0, 0);
+        this.currentPoint = currentPoint;
         this.endPoint = endPoint;
+    }
+}
+
+function parseObstacles()
+{
+    for(var i = 0; i < obstacleData.length; i++)
+    {
+        var img = new Image(20, 20);
+        img.src = obstacleData[i][0];
+
+        var startPoint = new Point(obstacleData[i][3], obstacleData[i][5]);
+        var endPoint = new Point(obstacleData[i][4], obstacleData[i][6]);
+        var currentPoint = new Point(obstacleData[i][7], obstacleData[i][8]);
+
+        var ob1 = new Obstacle(img, obstacleData[i][1], obstacleData[i][2], startPoint, endPoint, currentPoint);
+        
+        obstacles.push(ob1);
     }
 }
 
@@ -62,13 +83,13 @@ function gameLoop(timeStamp)
 {
     var timePassed = timeStamp - oldTimeStamp;
     oldTimeStamp = timeStamp;
-
     updateObstaclePositions(timePassed);
     window.requestAnimationFrame(gameLoop);
 }
 
 function updateObstaclePositions(timePassed)
 {
+    context.clearRect(0, 0, canvas.width, canvas.height);
     for(var i = 0; i < obstacles.length; i++)
     {
         //calculate future position of the obstacle
@@ -90,8 +111,6 @@ function updateObstaclePositions(timePassed)
 
 function drawImage(image, point)
 {
-    //clear the canvas
-    context.clearRect(0, 0, canvas.width, canvas.height);
     //draw the image at the point
     context.drawImage(image, point.x, point.y);
 }
