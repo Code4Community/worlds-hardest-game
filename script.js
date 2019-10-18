@@ -80,21 +80,6 @@ class Obstacle {
     }
 }
 
-// // Runs on Document Load, initializes full programs
-// document.addEventListener("DOMContentLoaded", 
-//     function() {
-//         // Grab element on which to draw the game board
-//         canvas = document.getElementById("board");
-//         // Sets the size of the board
-//         canvas.width = xMax;
-//         canvas.height = yMax;
-//         context = canvas.getContext("2d");
-
-//         parseObstacles();
-//         console.log(obstacles);
-//         window.requestAnimationFrame(gameLoop);
-//     }, false); // Do we need this optional boolean parameter?
-
 // Takes an array of obstacles data
 //     Format for each obstacle data entry is as follows: 
 //     image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
