@@ -24,6 +24,7 @@ var animationFrameId = null;
 
 // Set up function
 function setUpGame() {
+    // Since the gameLoop will run forever, we need to stop it before restarting it here
     if (animationFrameId != null) {
         window.cancelAnimationFrame(animationFrameId);
     }
@@ -54,6 +55,8 @@ function setUpGame() {
     console.log("Parsed obstacles after setUpGame(): ");
     console.log(obstacles);
 
+    // window.requestAnimationFrame runs and then runs the function you pass to it
+    // Since gameLoop calls window.requestAnimationFrame(gameLoop) it will run forever
     animationFrameId = window.requestAnimationFrame(gameLoop);
 }
 
@@ -117,7 +120,7 @@ function gameLoop(timeStamp)
     var timePassed = timeStamp - oldTimeStamp;
     oldTimeStamp = timeStamp;
     updateObstaclePositions(timePassed);
-    
+
     // See comments above in setUpGame for a quick explanation of .requestAnimationFrame()
     // since gameLoop is a function, and since .requestAnimationFrame calls the function passed into it, 
     //  gameLoop is a recursive function implemented across two functions
