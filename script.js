@@ -3,35 +3,63 @@
 // The user-controlled entity that performs actions in the game
 //let player = new Player();
 
-var alek = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
+var alek;
 
 //Obstacle Array
-var obstacleData = [
-    //image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
-    [alek, 0, .2, 0, 1200, 10, 500, 150,  10],
-    [alek, 0, .2, 0, 1200, 10, 500, 700,  10]
-]
+var obstacleData;
 
 // Global variables for the Canvas
 var context;
 var canvas;
-var obstacles = [];
-var oldTimeStamp = 0.0;
+var obstacles;
+var oldTimeStamp;
 
 // Details for the screen and its size
-let xMin = 0, xMax = 1200; 
-let yMin = 0, yMax = 500;
+var xMin;
+var xMax; 
+var yMin;
+var yMax;
 
-// Runs on Document Load, initializes full programs
-document.addEventListener("DOMContentLoaded", function() {
+var animationFrameId = null;
+
+// Set up function
+function setUpGame() {
+    if (animationFrameId != null) {
+        window.cancelAnimationFrame(animationFrameId);
+    }
+
+    alek = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
+    obstacleData = [
+        //image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
+        [alek, 0, .2, 0, 1200, 10, 500, 150,  10],
+        [alek, 0, .2, 0, 1200, 10, 500, 700,  10]
+    ];
+    obstacles = [];
+    oldTimeStamp = 0.0;
+    xMin = 0;
+    xMax = 1200; 
+    yMin = 0;
+    yMax = 500;
+    
     canvas = document.getElementById("board");
     canvas.width = xMax;
     canvas.height = yMax;
     context = canvas.getContext("2d");
     parseObstacles();
     console.log(obstacles);
-    window.requestAnimationFrame(gameLoop);
-}, false); // Do we need this optional boolean parameter?
+    animationFrameId = window.requestAnimationFrame(gameLoop);
+}
+
+// // Runs on Document Load, initializes full programs
+// document.addEventListener("GameReady", function() {
+//     canvas = document.getElementById("board");
+//     canvas.width = xMax;
+//     canvas.height = yMax;
+//     context = canvas.getContext("2d");
+//     parseObstacles();
+//     console.log(obstacles);
+//     animationFrameId = window.requestAnimationFrame(gameLoop);
+// }, false); // Do we need this optional boolean parameter?
 
 // Creates a 2D Point within the bounds of the screen
 class Point {
@@ -84,7 +112,7 @@ function gameLoop(timeStamp)
     var timePassed = timeStamp - oldTimeStamp;
     oldTimeStamp = timeStamp;
     updateObstaclePositions(timePassed);
-    window.requestAnimationFrame(gameLoop);
+    animationFrameId = window.requestAnimationFrame(gameLoop);
 }
 
 function updateObstaclePositions(timePassed)
