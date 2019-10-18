@@ -8,12 +8,17 @@ function Point(x, y)
 // Used to determine if the the player shape has touched an obstacle
 function isPlayerTouchingObstacle(player, obstacle)
 {
+    // Calculates a square player's current coordinates
     let defaultPlayerCoordinates = 
     {
-        topLeft: new Point(player.x - (player.width / 2), player.y - (player.height / 2)), // Top-Left Point
-        topRight: new Point(player.x + (player.width / 2), player.y - (player.height / 2)), // Top-Right Point
-        bottomLeft: new Point(player.x - (player.width / 2), player.y + (player.height / 2)), // Bottom-Left Point
-        bottomRight: new Point(player.x + (player.width / 2), player.y + (player.height / 2))  // Bottom-Right Point
+        // Top-Left Point
+        topLeft: new Point(player.x - (player.width / 2), player.y - (player.height / 2)), 
+        // Top-Right Point
+        topRight: new Point(player.x + (player.width / 2), player.y - (player.height / 2)), 
+        // Bottom-Left Point
+        bottomLeft: new Point(player.x - (player.width / 2), player.y + (player.height / 2)), 
+        // Bottom-Right Point
+        bottomRight: new Point(player.x + (player.width / 2), player.y + (player.height / 2))  
     }
 
     //***We will likely need a different collision detection system for different obstacle types (squares, circles, etc.)
@@ -24,11 +29,16 @@ function isPlayerTouchingObstacle(player, obstacle)
 
     let isPlayerTouchingObstacle = false;
 
-    if (defaultPlayerCoordinates.topLeft.x >= obstacleMinX && defaultPlayerCoordinates.topLeft.x <= obstacleMaxX && defaultPlayerCoordinates.topLeft.y >= obstacleMinY && defaultPlayerCoordinates.topLeft.y <= obstacleMaxY ||
-        defaultPlayerCoordinates.topRight.x >= obstacleMinX && defaultPlayerCoordinates.topRight.x <= obstacleMaxX && defaultPlayerCoordinates.topRight.y >= obstacleMinY && defaultPlayerCoordinates.topRight.y <= obstacleMaxY ||
-        defaultPlayerCoordinates.bottomLeft.x >= obstacleMinX && defaultPlayerCoordinates.bottomLeft.x <= obstacleMaxX && defaultPlayerCoordinates.bottomLeft.y >= obstacleMinY && defaultPlayerCoordinates.bottomLeft.y <= obstacleMaxY ||
-        defaultPlayerCoordinates.bottomRight.x >= obstacleMinX && defaultPlayerCoordinates.bottomRight.x <= obstacleMaxX && defaultPlayerCoordinates.bottomRight.y >= obstacleMinY && defaultPlayerCoordinates.bottomRight.y <= obstacleMaxY)
-    {
+    if (defaultPlayerCoordinates.topLeft.x >= obstacleMinX && defaultPlayerCoordinates.topLeft.x <= obstacleMaxX && defaultPlayerCoordinates.topLeft.y >= obstacleMinY && defaultPlayerCoordinates.topLeft.y <= obstacleMaxY) { 
+        isPlayerTouchingObstacle = true; 
+    } 
+    else if (defaultPlayerCoordinates.topRight.x >= obstacleMinX && defaultPlayerCoordinates.topRight.x <= obstacleMaxX && defaultPlayerCoordinates.topRight.y >= obstacleMinY && defaultPlayerCoordinates.topRight.y <= obstacleMaxY) { 
+            isPlayerTouchingObstacle = true; 
+    } 
+    else if (defaultPlayerCoordinates.bottomLeft.x >= obstacleMinX && defaultPlayerCoordinates.bottomLeft.x <= obstacleMaxX && defaultPlayerCoordinates.bottomLeft.y >= obstacleMinY && defaultPlayerCoordinates.bottomLeft.y <= obstacleMaxY) { 
+        isPlayerTouchingObstacle = true; 
+    } 
+    else if (defaultPlayerCoordinates.bottomRight.x >= obstacleMinX && defaultPlayerCoordinates.bottomRight.x <= obstacleMaxX && defaultPlayerCoordinates.bottomRight.y >= obstacleMinY && defaultPlayerCoordinates.bottomRight.y <= obstacleMaxY) {
         isPlayerTouchingObstacle = true;
     }
 

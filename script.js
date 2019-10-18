@@ -63,30 +63,36 @@ document.addEventListener("DOMContentLoaded",
         canvas.height = yMax;
         context = canvas.getContext("2d");
 
+        // Create each obstacle from the array of information and add it to the obstacle array
         parseObstacles();
         console.log(obstacles);
         window.requestAnimationFrame(gameLoop);
-    }, false); // Do we need this optional boolean parameter?
+    }, 
+    false); // Do we need this optional boolean parameter?
 
 // Takes an array of obstacles data
 //     Format for each obstacle data entry is as follows: 
 //     image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
 // Constructs an Obstacle object from this
-// Pushes this object to 
+// Pushes this object to the array of obstacles used in the canvas
 function parseObstacles(obstacleData)
 {
     for(var i = 0; i < obstacleData.length; i++)
     {
+        // Creates an image object with size and imageUrl
         var img = new Image(20, 20);
         img.src = obstacleData[i][0];
 
+        // Constructs points for obstacle location and limits
         var startPoint = new Point(obstacleData[i][3], obstacleData[i][5]);
         var endPoint = new Point(obstacleData[i][4], obstacleData[i][6]);
         var currentPoint = new Point(obstacleData[i][7], obstacleData[i][8]);
 
-        var ob1 = new Obstacle(img, obstacleData[i][1], obstacleData[i][2], startPoint, endPoint, currentPoint);
+        // Constructs the obstacle object from data created above
+        var currentObstacle = new Obstacle(img, obstacleData[i][1], obstacleData[i][2], startPoint, endPoint, currentPoint);
         
-        obstacles.push(ob1);
+        // Pushes new obstacle to array
+        obstacles.push(currentObstacle);
     }
 }
 
@@ -120,8 +126,9 @@ function updateObstaclePositions(timePassed)
     }
 }
 
+// Draws an Image object on the canvas at the given Point (another object)
 function drawImage(image, point)
 {
-    //draw the image at the point
+    // Draw the image at the point
     context.drawImage(image, point.x, point.y);
 }
