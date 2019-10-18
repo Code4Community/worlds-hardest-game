@@ -7,9 +7,9 @@ var alek = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e393
 
 //Obstacle Array
 var obstacleData = [
-    //image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
-    [alek, 0, .2, 0, 1200, 10, 500, 150,  10],
-    [alek, 0, .2, 0, 1200, 10, 500, 700,  10]
+    //image URL, imageWidth, imageHeight, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
+    [alek, 20, 20, 0, .2, 0, 1200, 10, 500, 150,  10],
+    [alek, 20, 20, 0, .2, 0, 1200, 10, 500, 700,  10]
 ]
 
 // Global variables for the Canvas
@@ -64,16 +64,17 @@ class Obstacle {
 
 function parseObstacles()
 {
+    //image URL, imageWidth, imageHeight, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
     for(var i = 0; i < obstacleData.length; i++)
     {
-        var img = new Image(20, 20);
+        var img = new Image(obstacleData[i][1], obstacleData[i][2]);
         img.src = obstacleData[i][0];
 
-        var startPoint = new Point(obstacleData[i][3], obstacleData[i][5]);
-        var endPoint = new Point(obstacleData[i][4], obstacleData[i][6]);
-        var currentPoint = new Point(obstacleData[i][7], obstacleData[i][8]);
+        var startPoint = new Point(obstacleData[i][5], obstacleData[i][7]);
+        var endPoint = new Point(obstacleData[i][6] - img.width, obstacleData[i][8] - img.height);
+        var currentPoint = new Point(obstacleData[i][9], obstacleData[i][10]);
 
-        var ob1 = new Obstacle(img, obstacleData[i][1], obstacleData[i][2], startPoint, endPoint, currentPoint);
+        var ob1 = new Obstacle(img, obstacleData[i][3], obstacleData[i][4], startPoint, endPoint, currentPoint);
         
         obstacles.push(ob1);
     }
