@@ -3,7 +3,7 @@
 // The user-controlled entity that performs actions in the game
 //let player = new Player();
 
-var alek;
+var aleksFace;
 
 //Obstacle Array
 var obstacleData;
@@ -28,11 +28,12 @@ function setUpGame() {
         window.cancelAnimationFrame(animationFrameId);
     }
 
-    alek = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
+    aleksFace = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
     obstacleData = [
-        //image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
-        [alek, 0, .2, 0, 1200, 10, 500, 150,  10],
-        [alek, 0, .2, 0, 1200, 10, 500, 700,  10]
+        // Format for each entry is as follows: 
+        // image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
+        [aleksFace,   0,      0.2,    0,         1200,         10,        500,          150,      10],
+        [aleksFace,   0,      0.2,    0,         1200,         10,        500,          700,      10]
     ];
     obstacles = [];
     oldTimeStamp = 0.0;
@@ -45,21 +46,10 @@ function setUpGame() {
     canvas.width = xMax;
     canvas.height = yMax;
     context = canvas.getContext("2d");
-    parseObstacles();
+    parseObstacles(obstacleData);
     console.log(obstacles);
     animationFrameId = window.requestAnimationFrame(gameLoop);
 }
-
-// // Runs on Document Load, initializes full programs
-// document.addEventListener("GameReady", function() {
-//     canvas = document.getElementById("board");
-//     canvas.width = xMax;
-//     canvas.height = yMax;
-//     context = canvas.getContext("2d");
-//     parseObstacles();
-//     console.log(obstacles);
-//     animationFrameId = window.requestAnimationFrame(gameLoop);
-// }, false); // Do we need this optional boolean parameter?
 
 // Creates a 2D Point within the bounds of the screen
 class Point {
@@ -90,7 +80,27 @@ class Obstacle {
     }
 }
 
-function parseObstacles()
+// // Runs on Document Load, initializes full programs
+// document.addEventListener("DOMContentLoaded", 
+//     function() {
+//         // Grab element on which to draw the game board
+//         canvas = document.getElementById("board");
+//         // Sets the size of the board
+//         canvas.width = xMax;
+//         canvas.height = yMax;
+//         context = canvas.getContext("2d");
+
+//         parseObstacles();
+//         console.log(obstacles);
+//         window.requestAnimationFrame(gameLoop);
+//     }, false); // Do we need this optional boolean parameter?
+
+// Takes an array of obstacles data
+//     Format for each obstacle data entry is as follows: 
+//     image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
+// Constructs an Obstacle object from this
+// Pushes this object to 
+function parseObstacles(obstacleData)
 {
     for(var i = 0; i < obstacleData.length; i++)
     {
