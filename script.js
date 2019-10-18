@@ -46,8 +46,14 @@ function setUpGame() {
     canvas.width = xMax;
     canvas.height = yMax;
     context = canvas.getContext("2d");
+
+    // Constructs obstacles from array of obstacle data
     parseObstacles(obstacleData);
+
+    // Debugging statements
+    console.log("Parsed obstacles after setUpGame(): ");
     console.log(obstacles);
+
     animationFrameId = window.requestAnimationFrame(gameLoop);
 }
 
@@ -111,6 +117,10 @@ function gameLoop(timeStamp)
     var timePassed = timeStamp - oldTimeStamp;
     oldTimeStamp = timeStamp;
     updateObstaclePositions(timePassed);
+    
+    // See comments above in setUpGame for a quick explanation of .requestAnimationFrame()
+    // since gameLoop is a function, and since .requestAnimationFrame calls the function passed into it, 
+    //  gameLoop is a recursive function implemented across two functions
     animationFrameId = window.requestAnimationFrame(gameLoop);
 }
 
