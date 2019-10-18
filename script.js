@@ -24,6 +24,7 @@ var animationFrameId = null;
 
 // Set up function
 function setUpGame() {
+    // Since the gameLoop will run forever, we need to stop it before restarting it here
     if (animationFrameId != null) {
         window.cancelAnimationFrame(animationFrameId);
     }
@@ -48,6 +49,9 @@ function setUpGame() {
     context = canvas.getContext("2d");
     parseObstacles(obstacleData);
     console.log(obstacles);
+
+    // window.requestAnimationFrame runs and then runs the function you pass to it
+    // Since gameLoop calls window.requestAnimationFrame(gameLoop) it will run forever
     animationFrameId = window.requestAnimationFrame(gameLoop);
 }
 
