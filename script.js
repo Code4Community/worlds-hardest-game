@@ -147,6 +147,8 @@ function updateObstaclePositions(timePassed)
         }
         //draw the obstacle
         drawImage(obstacles[i].image, obstacles[i].currentPoint);
+
+        drawCourseEdge();
     }
 }
 
@@ -155,4 +157,11 @@ function drawImage(image, point)
 {
     // Draw the image at the point
     context.drawImage(image, point.x, point.y);
+}
+
+function drawCourseEdge() {
+    var board = document.getElementById("board");
+    var context = board.getContext("2d");
+    context.fillStyle = "#FF0000";
+    context.fillRect(0, 0, 150, 75);
 }
