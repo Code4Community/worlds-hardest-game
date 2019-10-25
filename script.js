@@ -104,6 +104,7 @@ function moveAndDrawObstacles()
         }
         //draw the obstacle
         drawObstacle(obstacles[i].image, obstacles[i].currentPoint);
+        drawCourseEdge();
     }
 }
 
@@ -122,6 +123,6 @@ function drawObstacle(image, point)
 function drawCourseEdge() {
     var board = document.getElementById("board");
     var context = board.getContext("2d");
-    context.fillStyle = "#FF0000";
-    context.fillRect(0, 0, 150, 75);
+    context.fillStyle = "#000000";
+    context.fillRect(xMax/3, yMax/3, 100, 200);
 }
