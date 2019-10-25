@@ -36,7 +36,7 @@ function setUpGame() {
 
     obstacles = [
         //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y
-        new Obstacle(aleksFace, 20, 20, 6, 6, 10, 10, 1100, 400, 11, 11)
+        new Obstacle(aleksFace, 20, 20, 0, .25, 10, 10, 1100, 400, 11, 11)
     ];
 
     xMin = 0;
@@ -69,11 +69,10 @@ class Point {
 
 // Constructor for an Obstacle
 class Obstacle {
-    constructor(image, imageWidth, imageHeight, speedX, speedY, startPointX, startPointY, endPointX, endPointY, currentPointX, currentPointY) {
+    constructor(imageSrc, imageWidth, imageHeight, speedX, speedY, startPointX, startPointY, endPointX, endPointY, currentPointX, currentPointY) {
         //the this.image is an image object
-        this.image = image;
-        this.imageWidth = imageWidth;
-        this.imageHeight = imageHeight;
+        this.image = new Image(imageWidth, imageHeight);
+        this.image.src = imageSrc;
         this.speedX = speedX;
         this.speedY = speedY;
         this.startPoint = new Point(startPointX, startPointY);
