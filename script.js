@@ -23,7 +23,7 @@ var yMax;
 var intervalId = null;
 
 // Interval at which the game updates (ms)
-var updateInterval = 10;
+const updateInterval = 10;
 
 // Set up function
 function setUpGame() {
@@ -58,7 +58,7 @@ function setUpGame() {
     console.log("Parsed obstacles after setUpGame(): ");
     console.log(obstacles);
 
-    intervalId = setInterval(moveAndDrawObstacles, updateInterval);
+    intervalId = setInterval(updateGameState, updateInterval);
 }
 
 // Creates a 2D Point within the bounds of the screen
