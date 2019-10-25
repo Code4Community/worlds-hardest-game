@@ -36,7 +36,7 @@ function setUpGame() {
 
     obstacles = [
         //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y
-        new Obstacle(aleksFace, 20, 20, 0, .25, 10, 10, 1100, 400, 11, 11)
+        new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 11, 11)
     ];
 
     xMin = 0;
@@ -77,7 +77,7 @@ class Obstacle {
         this.speedY = speedY;
         this.startPoint = new Point(startPointX, startPointY);
         this.currentPoint = new Point(currentPointX, currentPointY);
-        this.endPoint = new Point(endPointX - imageWidth, endPointY - imageHeight);
+        this.endPoint = new Point(endPointX - (this.image.width), endPointY - (this.image.height));
     }
 }
 
