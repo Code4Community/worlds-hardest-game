@@ -33,14 +33,12 @@ function setUpGame() {
     }
 
     aleksFace = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
-    obstacleData = [
-        // Format for each entry is as follows: 
-        // image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
-        [aleksFace,   0,      0.2,    0,         1200,         10,        500,          150,      10],
-        [aleksFace,   0,      0.2,    0,         1200,         10,        500,          700,      10]
+
+    obstacles = [
+        //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y
+        new Obstacle(aleksFace, 20, 20, 6, 6, 10, 10, 1100, 400, 11, 11)
     ];
-    obstacles = [];
-    oldTimeStamp = 0.0;
+
     xMin = 0;
     xMax = 1200; 
     yMin = 0;
@@ -50,13 +48,6 @@ function setUpGame() {
     canvas.width = xMax;
     canvas.height = yMax;
     context = canvas.getContext("2d");
-
-    // Constructs obstacles from array of obstacle data
-    parseObstacles(obstacleData);
-
-    // Debugging statements
-    console.log("Parsed obstacles after setUpGame(): ");
-    console.log(obstacles);
 
     intervalId = setInterval(updateGameState, updateInterval);
 }
@@ -78,42 +69,16 @@ class Point {
 
 // Constructor for an Obstacle
 class Obstacle {
-    constructor(image, speedX, speedY, startPoint, endPoint, currentPoint) {
+    constructor(image, imageWidth, imageHeight, speedX, speedY, startPointX, startPointY, endPointX, endPointY, currentPointX, currentPointY) {
         //the this.image is an image object
         this.image = image;
+        this.imageWidth = imageWidth;
+        this.imageHeight = imageHeight;
         this.speedX = speedX;
         this.speedY = speedY;
-        // All of these are Point's
-        this.startPoint = startPoint;
-        this.currentPoint = currentPoint;
-        this.endPoint = endPoint;
-    }
-}
-
-// Takes an array of obstacles data
-//     Format for each obstacle data entry is as follows: 
-//     image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
-// Constructs an Obstacle object from this
-// Pushes this object to the array of obstacles used in the canvas
-function parseObstacles(obstacleData)
-{
-    //image URL, imageWidth, imageHeight, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
-    for(var i = 0; i < obstacleData.length; i++)
-    {
-        // Creates an image object with size and imageUrl
-        var img = new Image(20, 20);
-        img.src = obstacleData[i][0];
-
-        // Constructs points for obstacle location and limits
-        var startPoint = new Point(obstacleData[i][3], obstacleData[i][5]);
-        var endPoint = new Point(obstacleData[i][4], obstacleData[i][6]);
-        var currentPoint = new Point(obstacleData[i][7], obstacleData[i][8]);
-
-        // Constructs the obstacle object from data created above
-        var currentObstacle = new Obstacle(img, obstacleData[i][1], obstacleData[i][2], startPoint, endPoint, currentPoint);
-        
-        // Pushes new obstacle to array
-        obstacles.push(currentObstacle);
+        this.startPoint = new Point(startPointX, startPointY);
+        this.currentPoint = new Point(currentPointX, currentPointY);
+        this.endPoint = new Point(endPointX - imageWidth, endPointY - imageHeight);
     }
 }
 
@@ -123,7 +88,7 @@ function updateGameState() {
 
 function moveAndDrawObstacles()
 {
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    clearCanvas();
     for(var i = 0; i < obstacles.length; i++)
     {
         //calculate future position of the obstacle
@@ -139,12 +104,17 @@ function moveAndDrawObstacles()
             obstacles[i].speedY *= -1;
         }
         //draw the obstacle
-        drawImage(obstacles[i].image, obstacles[i].currentPoint);
+        drawObstacle(obstacles[i].image, obstacles[i].currentPoint);
     }
 }
 
+function clearCanvas()
+{
+    context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 // Draws an Image object on the canvas at the given Point (another object)
-function drawImage(image, point)
+function drawObstacle(image, point)
 {
     // Draw the image at the point
     context.drawImage(image, point.x, point.y);
