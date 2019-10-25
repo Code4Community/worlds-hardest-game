@@ -9,24 +9,27 @@ var aleksFace;
 var obstacleData;
 
 // Global variables for the Canvas
-var context;
 var canvas;
+var context;
 var obstacles;
 var oldTimeStamp;
 
 // Details for the screen and its size
 var xMin;
-var xMax; 
+var xMax;
 var yMin;
 var yMax;
 
-var animationFrameId = null;
+var intervalId = null;
+
+// Interval at which the game updates (ms)
+var updateInterval = 10;
 
 // Set up function
 function setUpGame() {
-    // Since the gameLoop will run forever, we need to stop it before restarting it here
-    if (animationFrameId != null) {
-        window.cancelAnimationFrame(animationFrameId);
+    // Stops the game loop before restarting
+    if (intervalId != null) {
+        clearInterval(intervalId);
     }
 
     aleksFace = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
@@ -46,6 +49,7 @@ function setUpGame() {
     canvas.height = yMax;
     context = canvas.getContext("2d");
 
+    intervalId = setInterval(moveAndDrawObstacles, updateInterval);
 }
 
 // Creates a 2D Point within the bounds of the screen
@@ -78,26 +82,18 @@ class Obstacle {
     }
 }
 
-function gameLoop(timeStamp)
-{
-    var timePassed = timeStamp - oldTimeStamp;
-    oldTimeStamp = timeStamp;
-    updateObstaclePositions(timePassed);
-
-    // See comments above in setUpGame for a quick explanation of .requestAnimationFrame() 
-    // since gameLoop is a function, and since .requestAnimationFrame calls the function passed into it, 
-    //  gameLoop is a recursive function implemented across two functions
-    animationFrameId = window.requestAnimationFrame(gameLoop);
+function updateGameState() {
+    moveAndDrawObstacles();
 }
 
-function updateObstaclePositions(timePassed)
+function moveAndDrawObstacles()
 {
     clearCanvas();
     for(var i = 0; i < obstacles.length; i++)
     {
         //calculate future position of the obstacle
-        obstacles[i].currentPoint.x += obstacles[i].speedX * timePassed;
-        obstacles[i].currentPoint.y += obstacles[i].speedY * timePassed;
+        obstacles[i].currentPoint.x += obstacles[i].speedX * updateInterval;
+        obstacles[i].currentPoint.y += obstacles[i].speedY * updateInterval;
         if(obstacles[i].currentPoint.x < obstacles[i].startPoint.x || obstacles[i].currentPoint.x > obstacles[i].endPoint.x)
         {
             obstacles[i].speedX *= -1;
