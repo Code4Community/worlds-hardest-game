@@ -36,7 +36,8 @@ function setUpGame() {
 
     obstacles = [
         //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y
-        new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 11, 11)
+        new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 11, 11),
+        new Obstacle(aleksFace, 100, 100, .2, .25, 10, 10, 1100, 500, 11, 11)
     ];
 
     xMin = 0;
@@ -70,7 +71,6 @@ class Point {
 // Constructor for an Obstacle
 class Obstacle {
     constructor(imageSrc, imageWidth, imageHeight, speedX, speedY, startPointX, startPointY, endPointX, endPointY, currentPointX, currentPointY) {
-        //the this.image is an image object
         this.image = new Image(imageWidth, imageHeight);
         this.image.src = imageSrc;
         this.speedX = speedX;
@@ -83,6 +83,7 @@ class Obstacle {
 
 function updateGameState() {
     moveAndDrawObstacles();
+    drawCourseEdge();
 }
 
 function moveAndDrawObstacles()
@@ -93,18 +94,15 @@ function moveAndDrawObstacles()
         //calculate future position of the obstacle
         obstacles[i].currentPoint.x += obstacles[i].speedX * updateInterval;
         obstacles[i].currentPoint.y += obstacles[i].speedY * updateInterval;
-        if(obstacles[i].currentPoint.x < obstacles[i].startPoint.x || obstacles[i].currentPoint.x > obstacles[i].endPoint.x)
+        
+        if(obstacles[i].currentPoint.x < obstacles[i].startPoint.x || obstacles[i].currentPoint.x > obstacles[i].endPoint.x || obstacles[i].currentPoint.y < obstacles[i].startPoint.y || obstacles[i].currentPoint.y > obstacles[i].endPoint.y)
         {
             obstacles[i].speedX *= -1;
-        }
-
-        if(obstacles[i].currentPoint.y < obstacles[i].startPoint.y || obstacles[i].currentPoint.y > obstacles[i].endPoint.y)
-        {
             obstacles[i].speedY *= -1;
         }
+
         //draw the obstacle
         drawObstacle(obstacles[i].image, obstacles[i].currentPoint);
-        drawCourseEdge();
     }
 }
 
@@ -117,7 +115,7 @@ function clearCanvas()
 function drawObstacle(image, point)
 {
     // Draw the image at the point
-    context.drawImage(image, point.x, point.y);
+    context.drawImage(image, point.x, point.y, image.width, image.height);
 }
 
 function drawCourseEdge() {
