@@ -1,21 +1,11 @@
 // World's Hardest Game, 2019
-<!DOCTYPE html>
-<html>
-    <head>
 
-        <!-- What appears in the title bar -->
-        <title>OSU Racing Game</title>
-
-    </head>
-
-    <body>
-    
-<script>
 // The user-controlled entity that performs actions in the game
 //let player = new Player();
-// Global variables for the Canvas
-var context;
+
+// Global variables for the HTML5 canvas
 var canvas;
+var context;
 var obstacles;
 var oldTimeStamp;
 
@@ -24,22 +14,53 @@ var xMin;
 var xMax;
 var yMin;
 var yMax;
-    
-var animationFrameId = null;
-    
+
+// Information for setInterval() and clearInterval()
+var intervalId = null;
+const updateInterval = 10; // interval in milliseconds
+
+//Setting up the player
+var player;
+
+//Movement booleans for smooth moves
+var up = false;
+var down = false;
+var right = false;
+var left = false;
+
+document.addEventListener('keydown', (e) => {
+    e.preventDefault();
+    if (e.code === "ArrowUp")        up = true;
+    else if (e.code === "ArrowDown") down = true;
+    else if(e.code === "ArrowRight") right = true;
+    else if(e.code === "ArrowLeft")  left = true;
+});
+
+document.addEventListener('keyup', (e) => {
+    e.preventDefault();
+    if (e.code === "ArrowUp")        up = false;
+    else if (e.code === "ArrowDown") down = false;
+    else if(e.code === "ArrowRight") right = false;
+    else if(e.code === "ArrowLeft")  left = false;
+});
+
 function setUpGame() {
-    // Since the gameLoop will run forever, we need to stop it before restarting it here
-    if (animationFrameId != null) {
-        window.cancelAnimationFrame(animationFrameId);
+    // Stops updating the game state before restarting
+    if (intervalId != null) {
+        clearInterval(intervalId);
     }
-    obstacleData = [
-        // Format for each entry is as follows: 
-        // image URL, speedX, speedY, topLimitX, bottomLimitX, topLimitY, bottomLimitY, currentX, currentY
-        [aleksFace,   0,      0.2,    0,         1200,         10,        500,          150,      10],
-        [aleksFace,   0,      0.2,    0,         1200,         10,        500,          700,      10]
+
+    var aleksFace = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
+    var andrewFace = "https://greenecounty.alumni.osu.edu/wp-content/uploads/sites/25/2018/06/Andrew-Haberlandt.jpg";
+
+    obstacles = [
+        //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y
+        new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 11, 11),
+        new Obstacle(aleksFace, 100, 100, .2, .25, 10, 10, 1100, 500, 11, 11)
     ];
-    obstacles = [];
-    oldTimeStamp = 0.0;
+
+    player = new Player(andrewFace, 100, 100, 3, 10, 10);
+
     xMin = 0;
     xMax = 1200; 
     yMin = 0;
@@ -50,84 +71,160 @@ function setUpGame() {
     canvas.height = yMax;
     context = canvas.getContext("2d");
 
-    // Constructs obstacles from array of obstacle data
-    parseObstacles(obstacleData);
-
-    // Debugging statements
-    console.log("Parsed obstacles after setUpGame(): ");
-    console.log(obstacles);
-
-    // window.requestAnimationFrame runs and then runs the function you pass to it
-    // Since gameLoop calls window.requestAnimationFrame(gameLoop) it will run forever
-    animationFrameId = window.requestAnimationFrame(gameLoop);
+    intervalId = setInterval(updateGameState, updateInterval);
 }
-// Creates a 2D Point within the bounds of the screen
+
+// 2D point within bounds of screen
 class Point {
     constructor(x, y) {
         this.x = x;
         this.y = y;
 
-        if (x < xMin || x > xMax) {
-            alert("x-coordinate " + x + " is out of range, xMin = " + xMin + " and xMax = " + xMax);
+        this.checkPoint();
+    }
+
+    checkPoint() {
+        if (this.x < xMin || this.x > xMax) {
+            alert("x-coordinate " + this.x + " is out of range, xMin = " + xMin + " and xMax = " + xMax);
         }
-        if (y < yMin || y > yMax) {
-            alert("y-coordinate " + y + " is out of range, yMin = " + yMin + " and yMax = " + yMax);
+        if (this.y < yMin || this.y > yMax) {
+            alert("y-coordinate " + this.y + " is out of range, yMin = " + yMin + " and yMax = " + yMax);
         }
+    }
+    
+    subtractX(subtractFromX) {
+        this.x -= subtractFromX;
+        this.checkPoint();
+    }
+
+    subtractY(subtractFromY) {
+        this.y -= subtractFromY;
+        this.checkPoint();
+    }
+
+    addX(addToX) {
+        this.x += addToX;
+        this.checkPoint();
+    }
+
+    addY(addToY) {
+        this.y += addToY;
+        this.checkPoint();
     }
 }
 
-// Constructor for an Obstacle
+// Game obstacle
 class Obstacle {
-    constructor(image, speed, startPoint, endPoint) {
-        //the this.image is an image object
-        this.image = image;
-        this.speed = speed;
-        // All of these are Point's
-        this.startPoint = startPoint;
-        this.currentPoint = new Point(0, 0);
-        this.endPoint = endPoint;
+    constructor(imageSrc, imageWidth, imageHeight, speedX, speedY, startPointX, startPointY, endPointX, endPointY, currentPointX, currentPointY) {
+        this.image = new Image(imageWidth, imageHeight);
+        this.image.src = imageSrc;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.startPoint = new Point(startPointX, startPointY);
+        this.currentPoint = new Point(currentPointX, currentPointY);
+        this.endPoint = new Point(endPointX - (this.image.width), endPointY - (this.image.height));
     }
 }
 
-function gameLoop(timeStamp)
-{
-    var timePassed = timeStamp - oldTimeStamp;
-    oldTimeStamp = timeStamp;
+class Player {
+    constructor(imageSrc, imageWidth, imageHeight, speed, pointX, pointY) {
+        this.image = new Image(imageWidth, imageHeight);
+        this.image.src = imageSrc;
+        this.speed = speed;
+        this.currentPoint = new Point(pointX, pointY);
+    }
 
-    updateObstaclePositions(timePassed);
-    animationFrameId = window.requestAnimationFrame(gameLoop);
+    moveRight() {
+        if(this.currentPoint.x  + player.speed <= xMax - this.image.width)
+        {
+            this.currentPoint.addX(player.speed);
+        }
+    }
+
+    moveLeft() {
+        if(this.currentPoint.x - player.speed >= xMin)
+        {
+            this.currentPoint.subtractX(player.speed);
+        }
+    }
+
+    moveUp() {
+        if(this.currentPoint.y - player.speed >= yMin)
+        {
+            this.currentPoint.subtractY(player.speed);
+        }
+    }
+
+    moveDown() {
+        if(this.currentPoint.y + player.speed <= yMax - this.image.height)
+        {
+            this.currentPoint.addY(player.speed);
+        }
+    }
 }
 
-function updateObstaclePositions(timePassed)
+function updateGameState() {
+    moveAndDrawObstacles();
+    drawCourseEdge();
+    moveAndDrawPlayer();
+}
+
+function moveAndDrawPlayer()
 {
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    if(up)
+    {
+        player.moveUp();
+    }
+    if(down)
+    {
+        player.moveDown();
+    }
+    if(left)
+    {
+        player.moveLeft();
+    }
+    if(right)
+    {
+        player.moveRight();
+    }
+    drawImage(player.image, player.currentPoint);
+}
+
+function moveAndDrawObstacles() {
+    clearCanvas();
     for(var i = 0; i < obstacles.length; i++)
     {
         //calculate future position of the obstacle
-        obstacles[i].currentPoint.x += obstacles[i].speed * timePassed;
-        obstacles[i].currentPoint.y += obstacles[i].speed * timePassed;
-        if(obstacles[i].currentPoint.x < obstacles[i].startPoint.x || obstacles[i].currentPoint.x > obstacles[i].endPoint.x)
-        {
+        obstacles[i].currentPoint.addX(obstacles[i].speedX * updateInterval);
+        obstacles[i].currentPoint.addY(obstacles[i].speedY * updateInterval);
+        
+        if(obstacles[i].currentPoint.x < obstacles[i].startPoint.x || obstacles[i].currentPoint.x > obstacles[i].endPoint.x || obstacles[i].currentPoint.y < obstacles[i].startPoint.y || obstacles[i].currentPoint.y > obstacles[i].endPoint.y){
             obstacles[i].speedX *= -1;
-        }
-
-        if(obstacles[i].currentPoint.y < obstacles[i].startPoint.y || obstacles[i].currentPoint.y > obstacles[i].endPoint.y)
-        {
             obstacles[i].speedY *= -1;
         }
+
         //draw the obstacle
         drawImage(obstacles[i].image, obstacles[i].currentPoint);
     }
 }
 
-function drawImage(image, point)
-{
-    //clear the canvas
+function clearCanvas() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    //draw the image at the point
-    context.drawImage(image, point.x, point.y);
 }
 
+// Draws an image object on the canvas at the given point
+function drawImage(image, point) {
+    // Draw the image at the point
+    context.drawImage(image, point.x, point.y, image.width, image.height);
+}
+
+function drawCourseEdge() {
+    var board = document.getElementById("board");
+    var context = board.getContext("2d");
+    context.fillStyle = "#000000";
+    context.fillRect(xMax/3, yMax/3, 100, 200);
+}
+            
 // Used to determine if the the player shape has touched an obstacle
 function isPlayerTouchingObstacle(player, obstacle)
 {
@@ -203,15 +300,3 @@ function isPointInsideARectangle(point)
     }
     return isPointInsideARectangle;
 }
-
-    
-//*******DELETE********
-console.log("Hello");
-canvas.context.fillStyle = "#FF0000";
-canvas.context.fillRect(0, 0, 75, 200);
-//***DELETE******
-    
-</script>
-
-    </body>
-</html>
