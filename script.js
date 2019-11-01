@@ -89,12 +89,19 @@ function startGame() {
     var andrewFace = "https://greenecounty.alumni.osu.edu/wp-content/uploads/sites/25/2018/06/Andrew-Haberlandt.jpg";
 
     obstacles = [
-        //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y
+        //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y, current X, current Y
         new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 11, 11),
         new Obstacle(aleksFace, 100, 100, .2, .25, 10, 10, 1100, 500, 11, 11)
     ];
 
+    var course = [
+        //width, length, x, y, color
+        new Rectangle(50, 50, 10, 10, "blue")
+    ]
+
     player = new Player(andrewFace, 100, 100, 3, 10, 10);
+
+    drawCourse(course);
 
     intervalId = setInterval(updateGameState, updateInterval);
 }
@@ -151,6 +158,17 @@ class Obstacle {
     }
 }
 
+class Rectangle{
+    constructor(width, length, x, y, color)
+    {
+        this.width = width;
+        this.lenght = length;
+        this.x = x;
+        this.y = y;
+        this.color = color;
+    }
+}
+
 class Player {
     constructor(imageSrc, imageWidth, imageHeight, speed, pointX, pointY) {
         this.image = new Image(imageWidth, imageHeight);
@@ -188,28 +206,30 @@ class Player {
     }
 }
 
+function drawCourse(course) {
+    for(var i = 0; i < course.length; i++) {
+        var rect = course[i];
+        context.fillStyle = rect.color;
+        context.fillRect(rect.x, rect.y, rect.width, rect.height);
+    }
+}
+
 function updateGameState() {
     moveAndDrawObstacles();
-    drawCourseEdge();
     moveAndDrawPlayer();
 }
 
-function moveAndDrawPlayer()
-{
-    if (up)
-    {
+function moveAndDrawPlayer() {
+    if (up) {
         player.moveUp();
     }
-    if (down)
-    {
+    if (down) {
         player.moveDown();
     }
-    if (left)
-    {
+    if (left) {
         player.moveLeft();
     }
-    if (right)
-    {
+    if (right) {
         player.moveRight();
     }
     drawImage(player.image, player.currentPoint);
