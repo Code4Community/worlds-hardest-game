@@ -5,6 +5,7 @@
         <title>World's Hardest Game</title>
         <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script src="script.js"></script>
     </head>
@@ -28,13 +29,17 @@
             </div>
 
             <div class="center">
-                <button onclick="startGame()" class="btn-large waves-effect waves-light start-button center">
-                    Start Game
-                </button>
+                <a onclick="startGame()" class="btn-large waves-effect waves-light start-button center">
+                    <i class="material-icons left">play_arrow</i>
+                    Play
+                </a>
                 &nbsp;
-                <button onclick="stopGame()" class="btn-large waves-effect waves-light start-button center">
-                    Stop Game
-                </button>
+                &nbsp;
+                &nbsp;
+                <a onclick="stopGame()" class="btn-large waves-effect waves-light start-button center">
+                    <i class="material-icons left">stop</i>
+                    Quit
+                </a>
                 <p>Insert game instructions here</p>
             </div>
         </div>
