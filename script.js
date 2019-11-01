@@ -12,6 +12,7 @@ var context;
 var player;
 var obstacles;
 var level;
+var course;
 
 // Information for setInterval() and clearInterval()
 var intervalId;
@@ -85,23 +86,24 @@ function stopGame() {
 function startGame() {
     stopGame();
     
-    var aleksFace = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
     var andrewFace = "https://greenecounty.alumni.osu.edu/wp-content/uploads/sites/25/2018/06/Andrew-Haberlandt.jpg";
-
-    obstacles = [
-        //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y, current X, current Y
-        new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 11, 11),
-        new Obstacle(aleksFace, 100, 100, .2, .25, 10, 10, 1100, 500, 11, 11)
-    ];
-
-    var course = [
-        //width, length, x, y, color
-        new Rectangle(50, 50, 10, 10, "blue")
-    ]
+    var aleksFace = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
 
     player = new Player(andrewFace, 100, 100, 3, 10, 10);
 
-    drawCourse(course);
+    if(level === 1)
+    {
+        course = [
+            //width, length, x, y, color
+            new Rectangle(50, 50, 100, 100, "blue")
+        ];
+
+        obstacles = [
+            //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y, current X, current Y
+            new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 11, 11),
+            new Obstacle(aleksFace, 100, 100, .2, .25, 10, 10, 1100, 500, 11, 11)
+        ];
+    }
 
     intervalId = setInterval(updateGameState, updateInterval);
 }
@@ -159,12 +161,11 @@ class Obstacle {
 }
 
 class Rectangle{
-    constructor(width, length, x, y, color)
+    constructor(width, height, x, y, color)
     {
         this.width = width;
-        this.lenght = length;
-        this.x = x;
-        this.y = y;
+        this.height = height;
+        this.position = new Point(x, y);
         this.color = color;
     }
 }
@@ -178,45 +179,51 @@ class Player {
     }
 
     moveRight() {
-        if (this.currentPoint.x  + player.speed <= xMax - this.image.width)
+        if (playerOnCourse(this.currentPoint.x + player.speed, this.currentPoint.y))
         {
             this.currentPoint.addX(player.speed);
         }
     }
 
     moveLeft() {
-        if (this.currentPoint.x - player.speed >= xMin)
+        if (playerOnCourse(this.currentPoint.x - player.speed, this.currentPoint.y))
         {
             this.currentPoint.subtractX(player.speed);
         }
     }
 
     moveUp() {
-        if (this.currentPoint.y - player.speed >= yMin)
+        if (playerOnCourse(this.currentPoint.x, this.currentPoint.y - player.speed))
         {
             this.currentPoint.subtractY(player.speed);
         }
     }
 
     moveDown() {
-        if (this.currentPoint.y + player.speed <= yMax - this.image.height)
+        if (playerOnCourse(this.currentPoint.x, this.currentPoint.y + player.speed))
         {
             this.currentPoint.addY(player.speed);
         }
     }
 }
 
-function drawCourse(course) {
-    for(var i = 0; i < course.length; i++) {
-        var rect = course[i];
-        context.fillStyle = rect.color;
-        context.fillRect(rect.x, rect.y, rect.width, rect.height);
+function playerOnCourse(x, y)
+{
+    //make sure the player does not collide with course here
+    var onCourse = false;
+   
+    if(y > 0 && x > 0 && y < yMax + player.image.height && x < xMax + player.image.width)
+    {
+        onCourse = true;
     }
+
+    return onCourse;
 }
 
 function updateGameState() {
     moveAndDrawObstacles();
     moveAndDrawPlayer();
+    drawCourse()
 }
 
 function moveAndDrawPlayer() {
@@ -253,6 +260,16 @@ function moveAndDrawObstacles() {
     }
 }
 
+function drawCourse()
+{
+    for(var i = 0; i < course.length; i++)
+    {
+        var rect = course[i];
+        context.fillStyle = rect.color;
+        context.fillRect(rect.position.x, rect.position.y, rect.width, rect.height);
+    }
+}
+
 function clearCanvas() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 }
@@ -263,9 +280,3 @@ function drawImage(image, point) {
     context.drawImage(image, point.x, point.y, image.width, image.height);
 }
 
-function drawCourseEdge() {
-    var board = document.getElementById("board");
-    var context = board.getContext("2d");
-    context.fillStyle = "#000000";
-    context.fillRect(xMax/3, yMax/3, 100, 200);
-}
