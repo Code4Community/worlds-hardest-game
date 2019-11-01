@@ -1,7 +1,16 @@
 .nav-wrapper {
-    background-color: #51A3A3;
+    background-color: #bb0000;
 }
 
 .start-button {
-    background-color: #CB904D !important;
+    background-color: #666666 !important;
+}
+
+#board {
+    background-color: #ffffff;
+}
+
+/* This is for testing purposes only */
+body {
+    background-color: #d3d3d3;
 }
