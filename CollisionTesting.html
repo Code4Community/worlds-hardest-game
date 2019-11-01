@@ -64,8 +64,8 @@ function setUpGame() {
 
     obstacles = [
         //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y
-        new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 100, 100),
-        new Obstacle(aleksFace, 100, 100, .2, .25, 10, 10, 1100, 500, 100, 100)
+        new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 200, 200),
+        new Obstacle(aleksFace, 100, 100, .2, .25, 10, 10, 1100, 500, 200, 200)
     ];
 
     player = new Player(andrewFace, 100, 100, 3, 10, 10);
@@ -261,10 +261,10 @@ function isPlayerTouchingObstacle(player, obstacle)
     }
 
     //***We will likely need a different collision detection system for different obstacle types (squares, circles, etc.)
-    let obstacleMinX = obstacle[0];
-    let obstacleMaxX = obstacle[0] + obstacle[2];
-    let obstacleMinY = obstacle[1];
-    let obstacleMaxY = obstacle[1] + obstacle[3];
+    let obstacleMinX = obstacle[10];
+    let obstacleMaxX = obstacle[10] + obstacle[1];
+    let obstacleMinY = obstacle[11];
+    let obstacleMaxY = obstacle[11] + obstacle[2];
 
     let isPlayerTouchingObstacle = false;
 
