@@ -176,6 +176,21 @@ function updateGameState() {
     moveAndDrawObstacles();
     drawCourseEdge();
     moveAndDrawPlayer();
+    if (player.isPlayerTouchingObstacle())
+    {
+        myGameArea.context.fillStyle = "#000000";
+        myGameArea.context.font = "30px Arial";
+        myGameArea.context.fillText("Game Over", 30, 50);
+        return;
+    }
+    
+    if (player.isPlayerTouchingObstacle()) 
+    {
+        myGameArea.context.fillStyle = "#000000";
+        myGameArea.context.font = "30px Arial";
+        myGameArea.context.fillText("You Won!", 30, 50);
+        return;
+    }
 }
 
 function moveAndDrawPlayer()
