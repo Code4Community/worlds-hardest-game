@@ -1,31 +1,27 @@
 // World's Hardest Game, 2019
 
-// The user-controlled entity that performs actions in the game
-//let player = new Player();
-
-// Global variables for the HTML5 canvas
-var canvas;
-var context;
-var obstacles;
-
 // Details for the screen and its size
 var xMin;
 var xMax;
 var yMin;
 var yMax;
 
+// Global variables for the HTML5 canvas
+var canvas;
+var context;
+var player;
+var obstacles;
+var level;
+
 // Information for setInterval() and clearInterval()
-var intervalId = null;
+var intervalId;
 const updateInterval = 10; // interval in milliseconds
 
-//Setting up the player
-var player;
-
-//Movement booleans for smooth moves
-var up = false;
-var down = false;
-var right = false;
-var left = false;
+// Movement booleans for keyboard input from user
+var up;
+var down;
+var right;
+var left;
 
 document.addEventListener('keydown', (e) => {
     e.preventDefault();
@@ -53,12 +49,42 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
-function setUpGame() {
-    // Stops updating the game state before restarting
+function loadGame() {
+    xMin = 0;
+    xMax = 1200;
+    yMin = 0;
+    yMax = 500;
+    
+    canvas = document.getElementById("board");
+    canvas.width = xMax;
+    canvas.height = yMax;
+    context = canvas.getContext("2d");
+    
+    level = 1;
+
+    intervalId = null; 
+
+    up = false;
+    down = false;
+    right = false;
+    left = false;
+}
+
+function setLevel(newLevel) {
+    stopGame();
+    level = newLevel;
+}
+
+function stopGame() {
     if (intervalId != null) {
         clearInterval(intervalId);
     }
+    intervalId = null;
+}
 
+function startGame() {
+    stopGame();
+    
     var aleksFace = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
     var andrewFace = "https://greenecounty.alumni.osu.edu/wp-content/uploads/sites/25/2018/06/Andrew-Haberlandt.jpg";
 
@@ -74,16 +100,6 @@ function setUpGame() {
     ]
 
     player = new Player(andrewFace, 100, 100, 3, 10, 10);
-
-    xMin = 0;
-    xMax = 1000; 
-    yMin = 0;
-    yMax = 500;
-    
-    canvas = document.getElementById("board");
-    canvas.width = xMax;
-    canvas.height = yMax;
-    context = canvas.getContext("2d");
 
     drawCourse(course);
 
