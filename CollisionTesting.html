@@ -3,16 +3,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-
-        <!-- What appears in the title bar -->
-        <title>OSU Racing Game</title>
-
-    </head>
-
-    <body>
-
-<script>
-
+        <meta charset="UTF-8">
+        <title>World's Hardest Game</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
 // The user-controlled entity that performs actions in the game
 //let player = new Player();
 
@@ -315,6 +311,23 @@ function isPointInsideARectangle(point)
 }
 
 </script>
+</head>
+    <body style="background-color: #d3d3d3;">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo center">World's Hardest Game</a>
+            </div>
+        </nav>
 
+        <div class="container-fluid" style="background-color: #cccccc; padding: 10px 10px;">
+            <div class="center">
+                <canvas id="board" style="background-color: #ffffff;"></canvas>
+            </div>
+
+            <div class="center">
+                <button onclick="setUpGame()" class="btn-large waves-effect waves-light start-button center">Start Game</button>
+                <p>Insert game instructions here</p>
+            </div>
+        </div>
     </body>
 </html>
