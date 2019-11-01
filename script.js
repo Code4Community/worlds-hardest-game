@@ -30,18 +30,28 @@ var left = false;
 
 document.addEventListener('keydown', (e) => {
     e.preventDefault();
-    if (e.code === "ArrowUp")        up = true;
-    else if (e.code === "ArrowDown") down = true;
-    else if(e.code === "ArrowRight") right = true;
-    else if(e.code === "ArrowLeft")  left = true;
+    if (e.code === "ArrowUp") {
+        up = true;
+    } else if (e.code === "ArrowDown") {
+        down = true;
+    } else if (e.code === "ArrowRight") {
+        right = true;
+    } else if (e.code === "ArrowLeft") {
+        left = true;
+    }
 });
 
 document.addEventListener('keyup', (e) => {
     e.preventDefault();
-    if (e.code === "ArrowUp")        up = false;
-    else if (e.code === "ArrowDown") down = false;
-    else if(e.code === "ArrowRight") right = false;
-    else if(e.code === "ArrowLeft")  left = false;
+    if (e.code === "ArrowUp") {
+        up = false;
+    } else if (e.code === "ArrowDown") {
+        down = false;
+    } else if (e.code === "ArrowRight") {
+        right = false;
+    } else if (e.code === "ArrowLeft") {
+        left = false;
+    }
 });
 
 function setUpGame() {
@@ -135,28 +145,28 @@ class Player {
     }
 
     moveRight() {
-        if(this.currentPoint.x  + player.speed <= xMax - this.image.width)
+        if (this.currentPoint.x  + player.speed <= xMax - this.image.width)
         {
             this.currentPoint.addX(player.speed);
         }
     }
 
     moveLeft() {
-        if(this.currentPoint.x - player.speed >= xMin)
+        if (this.currentPoint.x - player.speed >= xMin)
         {
             this.currentPoint.subtractX(player.speed);
         }
     }
 
     moveUp() {
-        if(this.currentPoint.y - player.speed >= yMin)
+        if (this.currentPoint.y - player.speed >= yMin)
         {
             this.currentPoint.subtractY(player.speed);
         }
     }
 
     moveDown() {
-        if(this.currentPoint.y + player.speed <= yMax - this.image.height)
+        if (this.currentPoint.y + player.speed <= yMax - this.image.height)
         {
             this.currentPoint.addY(player.speed);
         }
@@ -171,19 +181,19 @@ function updateGameState() {
 
 function moveAndDrawPlayer()
 {
-    if(up)
+    if (up)
     {
         player.moveUp();
     }
-    if(down)
+    if (down)
     {
         player.moveDown();
     }
-    if(left)
+    if (left)
     {
         player.moveLeft();
     }
-    if(right)
+    if (right)
     {
         player.moveRight();
     }
@@ -192,13 +202,13 @@ function moveAndDrawPlayer()
 
 function moveAndDrawObstacles() {
     clearCanvas();
-    for(var i = 0; i < obstacles.length; i++)
+    for (var i = 0; i < obstacles.length; i++)
     {
         //calculate future position of the obstacle
         obstacles[i].currentPoint.addX(obstacles[i].speedX * updateInterval);
         obstacles[i].currentPoint.addY(obstacles[i].speedY * updateInterval);
         
-        if(obstacles[i].currentPoint.x < obstacles[i].startPoint.x || obstacles[i].currentPoint.x > obstacles[i].endPoint.x || obstacles[i].currentPoint.y < obstacles[i].startPoint.y || obstacles[i].currentPoint.y > obstacles[i].endPoint.y){
+        if (obstacles[i].currentPoint.x < obstacles[i].startPoint.x || obstacles[i].currentPoint.x > obstacles[i].endPoint.x || obstacles[i].currentPoint.y < obstacles[i].startPoint.y || obstacles[i].currentPoint.y > obstacles[i].endPoint.y){
             obstacles[i].speedX *= -1;
             obstacles[i].speedY *= -1;
         }
