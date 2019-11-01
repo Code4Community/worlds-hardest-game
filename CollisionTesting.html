@@ -64,8 +64,8 @@ function setUpGame() {
 
     obstacles = [
         //image URL, image widht, image height, speed X, speed Y, start X, start Y, end X, end Y
-        new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 11, 11),
-        new Obstacle(aleksFace, 100, 100, .2, .25, 10, 10, 1100, 500, 11, 11)
+        new Obstacle(aleksFace, 100, 100, 0, .25, 10, 10, 1100, 500, 100, 100),
+        new Obstacle(aleksFace, 100, 100, .2, .25, 10, 10, 1100, 500, 100, 100)
     ];
 
     player = new Player(andrewFace, 100, 100, 3, 10, 10);
@@ -176,6 +176,21 @@ function updateGameState() {
     moveAndDrawObstacles();
     drawCourseEdge();
     moveAndDrawPlayer();
+    if (player.isPlayerTouchingObstacle())
+    {
+        myGameArea.context.fillStyle = "#000000";
+        myGameArea.context.font = "30px Arial";
+        myGameArea.context.fillText("Game Over", 30, 50);
+        return;
+    }
+    
+    if (player.isPlayerTouchingObstacle()) 
+    {
+        myGameArea.context.fillStyle = "#000000";
+        myGameArea.context.font = "30px Arial";
+        myGameArea.context.fillText("You Won!", 30, 50);
+        return;
+    }
 }
 
 function moveAndDrawPlayer()
