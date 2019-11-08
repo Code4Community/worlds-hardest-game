@@ -271,6 +271,7 @@ function isPlayerTouchingObstacle(player)
                 defaultPlayerCoordinates.bottomRight.x >= obstacleMinX && defaultPlayerCoordinates.bottomRight.x <= obstacleMaxX && defaultPlayerCoordinates.bottomRight.y >= obstacleMinY && defaultPlayerCoordinates.bottomRight.y <= obstacleMaxY)
             {
                  isPlayerTouchingObstacle = true;
+                 xmax /= 3;
             }
     }
     return isPlayerTouchingObstacle;        
