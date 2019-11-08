@@ -256,22 +256,23 @@ function isPlayerTouchingObstacle(player, obstacle)
         bottomRight: new Point(player.x + (player.width / 2), player.y + (player.height / 2))  // Bottom-Right Point
     }
 
-    //***We will likely need a different collision detection system for different obstacle types (squares, circles, etc.)
-    let obstacleMinX = obstacle[10];
-    let obstacleMaxX = obstacle[10] + obstacle[1];
-    let obstacleMinY = obstacle[11];
-    let obstacleMaxY = obstacle[11] + obstacle[2];
-
     let isPlayerTouchingObstacle = false;
-
-    if (defaultPlayerCoordinates.topLeft.x >= obstacleMinX && defaultPlayerCoordinates.topLeft.x <= obstacleMaxX && defaultPlayerCoordinates.topLeft.y >= obstacleMinY && defaultPlayerCoordinates.topLeft.y <= obstacleMaxY ||
-        defaultPlayerCoordinates.topRight.x >= obstacleMinX && defaultPlayerCoordinates.topRight.x <= obstacleMaxX && defaultPlayerCoordinates.topRight.y >= obstacleMinY && defaultPlayerCoordinates.topRight.y <= obstacleMaxY ||
-        defaultPlayerCoordinates.bottomLeft.x >= obstacleMinX && defaultPlayerCoordinates.bottomLeft.x <= obstacleMaxX && defaultPlayerCoordinates.bottomLeft.y >= obstacleMinY && defaultPlayerCoordinates.bottomLeft.y <= obstacleMaxY ||
-        defaultPlayerCoordinates.bottomRight.x >= obstacleMinX && defaultPlayerCoordinates.bottomRight.x <= obstacleMaxX && defaultPlayerCoordinates.bottomRight.y >= obstacleMinY && defaultPlayerCoordinates.bottomRight.y <= obstacleMaxY)
+    
+    //***We will likely need a different collision detection system for different obstacle types (squares, circles, etc.)
+    for (var i = 0; i < obstacles.length; i++)
     {
-        isPlayerTouchingObstacle = true;
+           let obstacleMinX = obstacle[i][10];
+           let obstacleMaxX = obstacle[i][10] + obstacle[i][1];
+           let obstacleMinY = obstacle[i][11];
+           let obstacleMaxY = obstacle[i][11] + obstacle[i][2];
+           if (defaultPlayerCoordinates.topLeft.x >= obstacleMinX && defaultPlayerCoordinates.topLeft.x <= obstacleMaxX && defaultPlayerCoordinates.topLeft.y >= obstacleMinY && defaultPlayerCoordinates.topLeft.y <= obstacleMaxY ||
+                defaultPlayerCoordinates.topRight.x >= obstacleMinX && defaultPlayerCoordinates.topRight.x <= obstacleMaxX && defaultPlayerCoordinates.topRight.y >= obstacleMinY && defaultPlayerCoordinates.topRight.y <= obstacleMaxY ||
+                defaultPlayerCoordinates.bottomLeft.x >= obstacleMinX && defaultPlayerCoordinates.bottomLeft.x <= obstacleMaxX && defaultPlayerCoordinates.bottomLeft.y >= obstacleMinY && defaultPlayerCoordinates.bottomLeft.y <= obstacleMaxY ||
+                defaultPlayerCoordinates.bottomRight.x >= obstacleMinX && defaultPlayerCoordinates.bottomRight.x <= obstacleMaxX && defaultPlayerCoordinates.bottomRight.y >= obstacleMinY && defaultPlayerCoordinates.bottomRight.y <= obstacleMaxY)
+            {
+                 isPlayerTouchingObstacle = true;
+            }
     }
-
     return isPlayerTouchingObstacle;        
 }
 
