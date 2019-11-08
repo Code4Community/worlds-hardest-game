@@ -141,6 +141,10 @@ class Player {
         this.image.src = imageSrc;
         this.speed = speed;
         this.currentPoint = new Point(pointX, pointY);
+        this.crashCheck = function()
+        {
+            return isPlayerTouchingObstacle(this);   
+        }
     }
 
     moveRight() {
@@ -176,19 +180,11 @@ function updateGameState() {
     moveAndDrawObstacles();
     drawCourseEdge();
     moveAndDrawPlayer();
-    if (player.isPlayerTouchingObstacle())
+    if (player.crashCheck())
     {
         myGameArea.context.fillStyle = "#000000";
         myGameArea.context.font = "30px Arial";
         myGameArea.context.fillText("Game Over", 30, 50);
-        return;
-    }
-    
-    if (player.isPlayerTouchingObstacle()) 
-    {
-        myGameArea.context.fillStyle = "#000000";
-        myGameArea.context.font = "30px Arial";
-        myGameArea.context.fillText("You Won!", 30, 50);
         return;
     }
 }
