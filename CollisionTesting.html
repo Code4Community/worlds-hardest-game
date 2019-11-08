@@ -262,10 +262,10 @@ function isPlayerTouchingObstacle(player)
     //***We will likely need a different collision detection system for different obstacle types (squares, circles, etc.)
     for (var i = 0; i < obstacles.length; i++)
     {
-           let obstacleMinX = obstacles[i][10];
-           let obstacleMaxX = obstacles[i][10] + obstacles[i][1];
-           let obstacleMinY = obstacles[i][11];
-           let obstacleMaxY = obstacles[i][11] + obstacles[i][2];
+           let obstacleMinX = obstacles[i][9];
+           let obstacleMaxX = obstacles[i][9] + obstacles[i][1];
+           let obstacleMinY = obstacles[i][10];
+           let obstacleMaxY = obstacles[i][10] + obstacles[i][2];
            if (defaultPlayerCoordinates.topLeft.x >= obstacleMinX && defaultPlayerCoordinates.topLeft.x <= obstacleMaxX && defaultPlayerCoordinates.topLeft.y >= obstacleMinY && defaultPlayerCoordinates.topLeft.y <= obstacleMaxY ||
                 defaultPlayerCoordinates.topRight.x >= obstacleMinX && defaultPlayerCoordinates.topRight.x <= obstacleMaxX && defaultPlayerCoordinates.topRight.y >= obstacleMinY && defaultPlayerCoordinates.topRight.y <= obstacleMaxY ||
                 defaultPlayerCoordinates.bottomLeft.x >= obstacleMinX && defaultPlayerCoordinates.bottomLeft.x <= obstacleMaxX && defaultPlayerCoordinates.bottomLeft.y >= obstacleMinY && defaultPlayerCoordinates.bottomLeft.y <= obstacleMaxY ||
