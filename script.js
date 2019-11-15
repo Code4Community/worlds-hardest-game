@@ -75,6 +75,7 @@ function loadGame() {
 function setLevel(newLevel) {
     stopGame();
     level = newLevel;
+
 }
 
 function stopGame() {
@@ -96,18 +97,21 @@ function startGame() {
 
     if(level === 1)
     {
-        course = [
-            //width, length, x, y, color
-            // new Rectangle(1100, 50, 50, 30, "black"),
-            // new Rectangle(50, 400, 1150, 30, "black"),
-            // new Rectangle(1150, 50, 50, 430, "black")
-        ];
+        course = [];
 
         obstacles = [
             new Obstacle(aleksFace, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0),
             new Obstacle(aleksFace, 80, 80, 0, -.25, 0, 0, 1200, 500, 300, 420),
             new Obstacle(aleksFace, 80, 80, .1, .2, 0, 0, 1200, 500, 600, 0),
             new Obstacle(aleksFace, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0)
+        ];
+    }
+    if(level === 2)
+    {
+        course = [];
+
+        obstacles = [
+            new Obstacle(aleksFace, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0)
         ];
     }
 
