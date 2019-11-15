@@ -10,6 +10,10 @@
     background-color: #ffffff;
 }
 
+#level {
+    float: right;
+}
+
 /* This is for testing purposes only */
 body {
     background-color: #d3d3d3;

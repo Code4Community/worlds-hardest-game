@@ -25,6 +25,10 @@ var down;
 var right;
 var left;
 
+$(document).ready(function(){
+    $('select').formSelect();
+});
+
 document.addEventListener('keydown', (e) => {
     e.preventDefault();
     if (e.code === "ArrowUp") {
@@ -62,20 +66,12 @@ function loadGame() {
     canvas.height = yMax;
     context = canvas.getContext("2d");
     
-    level = 1;
-
     intervalId = null; 
 
     up = false;
     down = false;
     right = false;
     left = false;
-}
-
-function setLevel(newLevel) {
-    stopGame();
-    level = newLevel;
-
 }
 
 function stopGame() {
@@ -95,7 +91,10 @@ function startGame() {
     player = new Player(andrewFace, 80, 80, 3, 10, 10);
     objective = new Objective(blockO, 80, 80, new Point(1020, 210));
 
-    if(level === 1)
+    var levelDropdown = document.getElementById("level-select");
+    level = levelDropdown.options[levelDropdown.selectedIndex].value;
+
+    if(level == 1)
     {
         course = [];
 
@@ -106,7 +105,7 @@ function startGame() {
             new Obstacle(aleksFace, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0)
         ];
     }
-    if(level === 2)
+    if(level == 2)
     {
         course = [];
 
