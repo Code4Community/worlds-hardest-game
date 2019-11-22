@@ -20,8 +20,9 @@
                 </a>
                 <div class="input-field" id = "level">
                         <select id = "level-select">
-                            <option value="1" selected>Level 1</option>
-                            <option value="2">Level 2</option>
+                            <option value="0" selected disabled>Choose a Level...</option>
+                            <option value="1">Level 1 (Difficult)</option>
+                            <option value="2">Level 2 (Easy)</option>
                         </select>
                     </div>
             </div>
@@ -33,9 +34,8 @@
             </div>
 
             <div class="center">
-                <a onclick="startGame()" class="btn-large waves-effect waves-light start-button center">
-                    <i class="material-icons left">play_arrow</i>
-                    Play
+                <a id="playRestartBtn" onclick="startGame()" class="btn-large waves-effect waves-light start-button center">
+                    <i class="material-icons left">play_arrow</i>Play
                 </a>
                 &nbsp;
                 &nbsp;

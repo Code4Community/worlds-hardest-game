@@ -105,7 +105,7 @@ function startGame() {
             new Obstacle(aleksFace, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0)
         ];
     }
-    if(level == 2)
+    else if(level == 2)
     {
         course = [];
 
@@ -113,6 +113,14 @@ function startGame() {
             new Obstacle(aleksFace, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0)
         ];
     }
+    else {
+        console.log("No level selected. ");
+    }
+
+    let playInnerHtml = "<i class='material-icons left'>play_arrow</i>&nbsp;Play";
+    let restartInnerHtml = "<i class='material-icons left'>replay</i>Restart";
+
+    document.getElementById("playRestartBtn").innerHTML = restartInnerHtml;
 
     intervalId = setInterval(updateGameState, updateInterval);
 }
@@ -137,31 +145,27 @@ class Point {
 
     checkPoint() {
         if (this.x < xMin || this.x > xMax) {
-           // alert("x-coordinate " + this.x + " is out of range, xMin = " + xMin + " and xMax = " + xMax);
+            alert("x-coordinate " + this.x + " is out of range, xMin = " + xMin + " and xMax = " + xMax);
         }
         if (this.y < yMin || this.y > yMax) {
-            //alert("y-coordinate " + this.y + " is out of range, yMin = " + yMin + " and yMax = " + yMax);
+            alert("y-coordinate " + this.y + " is out of range, yMin = " + yMin + " and yMax = " + yMax);
         }
     }
     
     subtractX(subtractFromX) {
         this.x -= subtractFromX;
-        this.checkPoint();
     }
 
     subtractY(subtractFromY) {
         this.y -= subtractFromY;
-        this.checkPoint();
     }
 
     addX(addToX) {
         this.x += addToX;
-        this.checkPoint();
     }
 
     addY(addToY) {
         this.y += addToY;
-        this.checkPoint();
     }
 }
 
