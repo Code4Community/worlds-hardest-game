@@ -1,50 +1,61 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>World's Hardest Game</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script src="script.js"></script>
-    </head>
-    <body onload="loadGame()">
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo">
-                    &nbsp;
-                    World's Hardest Game
-                </a>
-                <div class="input-field" id = "level">
-                        <select id = "level-select">
-                            <option value="1" selected>Level 1</option>
-                            <option value="2">Level 2</option>
-                        </select>
-                    </div>
-            </div>
-        </nav>
 
-        <div class="container-fluid">
-            <div class="center">
-                <canvas id="board"></canvas>
-            </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            <div class="center">
-                <a onclick="startGame()" class="btn-large waves-effect waves-light start-button center">
-                    <i class="material-icons left">play_arrow</i>
-                    Play
-                </a>
-                &nbsp;
-                &nbsp;
-                &nbsp;
-                <a onclick="stopGame()" class="btn-large waves-effect waves-light start-button center">
-                    <i class="material-icons left">stop</i>
-                    Quit
-                </a>
-                <p>Insert game instructions here</p>
-            </div>
+    <title>World's Hardest Game</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</head>
+
+<body onload="loadGame()">
+    <nav class="navbar navbar-dark bg-dark bg-scarlet">
+        <a href="#" class="navbar-brand">
+            World's Hardest Game
+        </a>
+        <form class="form-inline">
+            <select class="form-control" id="level-select">
+                <option value="1" selected>Level 1</option>
+                <option value="2">Level 2</option>
+            </select>
+        </form>
+    </nav>
+
+    <br>
+
+    <div class="container-fluid">
+        <div class="text-center">
+            <canvas id="board"></canvas>
         </div>
-    </body>
+
+        <div class="text-center">
+            <button onclick="startGame()" class="btn btn-lg btn-secondary">
+                Play
+            </button>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <button onclick="stopGame()" class="btn btn-lg btn-secondary">
+                Quit
+            </button>
+            <p>Insert game instructions here</p>
+        </div>
+    </div>
+</body>
+
 </html>

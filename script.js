@@ -25,10 +25,6 @@ var down;
 var right;
 var left;
 
-$(document).ready(function(){
-    $('select').formSelect();
-});
-
 document.addEventListener('keydown', (e) => {
     e.preventDefault();
     if (e.code === "ArrowUp") {
