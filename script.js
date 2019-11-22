@@ -113,10 +113,9 @@ function startGame() {
         console.log("No level selected. ");
     }
 
-    let playInnerHtml = "<i class='material-icons left'>play_arrow</i>&nbsp;Play";
-    let restartInnerHtml = "<i class='material-icons left'>replay</i>Restart";
+    let restartInnerHtml = "<i class='material-icons float-left'>replay</i>Restart";
 
-    document.getElementById("playRestartBtn").innerHTML = restartInnerHtml;
+    document.getElementById("playRestartButton").innerHTML = restartInnerHtml;
 
     intervalId = setInterval(updateGameState, updateInterval);
 }
