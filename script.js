@@ -95,10 +95,10 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(aleksFace, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0),
-            new Obstacle(aleksFace, 80, 80, 0, -.25, 0, 0, 1200, 500, 300, 420),
-            new Obstacle(aleksFace, 80, 80, .1, .2, 0, 0, 1200, 500, 600, 0),
-            new Obstacle(aleksFace, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0)
+            // new Obstacle(aleksFace, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0),
+            // new Obstacle(aleksFace, 80, 80, 0, -.25, 0, 0, 1200, 500, 300, 420),
+            // new Obstacle(aleksFace, 80, 80, .1, .2, 0, 0, 1200, 500, 600, 0),
+            // new Obstacle(aleksFace, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0),
         ];
     }
     else if(level == 2)
