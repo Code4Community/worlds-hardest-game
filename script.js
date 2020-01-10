@@ -51,6 +51,15 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
+window.onload=function(){
+    level_select = document.getElementById('level-select');
+    level_select.addEventListener('change', () => {
+        stopGame();
+        let playInnerHtml = "<i class='material-icons float-left'>play_arrow</i>&nbsp;Play";
+        document.getElementById("playRestartButton").innerHTML = playInnerHtml;
+    })
+}
+
 function loadGame() {
     xMin = 0;
     xMax = 1200;
@@ -84,7 +93,7 @@ function startGame() {
     var uMichLogo = "./assets/uMichLogo.png";
     var blockO = "https://i.pinimg.com/originals/e6/93/9b/e6939b21548bcf2d2a98b150c3867cdb.png"
 
-    player = new Player(andrewFace, 80, 80, 3, 10, 10);
+    player = new Player(andrewFace, 80, 80, 3, new Point(10, 10));
     objective = new Objective(blockO, 80, 80, new Point(1020, 210));
 
     var levelDropdown = document.getElementById("level-select");
@@ -95,10 +104,10 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(uMichLogo, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0),
-            new Obstacle(uMichLogo, 80, 80, 0, -.25, 0, 0, 1200, 500, 300, 420),
-            new Obstacle(uMichLogo, 80, 80, .1, .2, 0, 0, 1200, 500, 600, 0),
-            new Obstacle(uMichLogo, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0),
+            new Obstacle(uMichLogo, 80, 80, 0, .25, new Point(0, 0), new Point(1200, 500), new Point(100, 0)),
+            new Obstacle(uMichLogo, 80, 80, 0, -.25, new Point(0, 0), new Point(1200, 500), new Point(300, 420)),
+            new Obstacle(uMichLogo, 80, 80, .1, .2, new Point(0, 0), new Point(1200, 500), new Point(600, 0)),
+            new Obstacle(uMichLogo, 80, 80, -.1, .2, new Point(0, 0), new Point(1200, 500), new Point(900, 0)),
         ];
     }
     else if(level == 2)
@@ -106,7 +115,7 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(uMichLogo, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0)
+            new Obstacle(uMichLogo, 80, 80, 0, .25, new Point(0, 0), new Point(1200, 500), new Point(100, 0))
         ];
     }
     else {
@@ -166,33 +175,25 @@ class Point {
 
 // Game obstacle
 class Obstacle {
-    constructor(imageSrc, imageWidth, imageHeight, speedX, speedY, startPointX, startPointY, endPointX, endPointY, currentPointX, currentPointY) {
+    constructor(imageSrc, imageWidth, imageHeight, speedX, speedY, startPoint, endPoint, currentPoint) {
         this.image = new Image(imageWidth, imageHeight);
         this.image.src = imageSrc;
         this.speedX = speedX;
         this.speedY = speedY;
-        this.startPoint = new Point(startPointX, startPointY);
-        this.currentPoint = new Point(currentPointX, currentPointY);
-        this.endPoint = new Point(endPointX - (this.image.width), endPointY - (this.image.height));
-    }
-}
-
-class Rectangle{
-    constructor(width, height, x, y, color)
-    {
-        this.width = width;
-        this.height = height;
-        this.position = new Point(x, y);
-        this.color = color;
+        this.startPoint = startPoint;
+        this.currentPoint = currentPoint;
+        this.endPoint = endPoint;
+        this.endPoint.x = this.endPoint.x - this.image.width;
+        this.endPoint.y = this.endPoint.y - this.image.height;
     }
 }
 
 class Player {
-    constructor(imageSrc, imageWidth, imageHeight, speed, pointX, pointY) {
+    constructor(imageSrc, imageWidth, imageHeight, speed, point) {
         this.image = new Image(imageWidth, imageHeight);
         this.image.src = imageSrc;
         this.speed = speed;
-        this.currentPoint = new Point(pointX, pointY);
+        this.currentPoint = point;
     }
 
     moveRight() {
@@ -239,10 +240,12 @@ function atObjective() {
     var objectiveTop = objective.point.y;
     var objectiveBottom = objective.point.y + objective.image.height;
 
-    var points = [new Point(player.currentPoint.x, player.currentPoint.y), 
+    var points = [
+        new Point(player.currentPoint.x, player.currentPoint.y), 
         new Point(player.currentPoint.x + player.image.width, player.currentPoint.y),
         new Point(player.currentPoint.x, player.currentPoint.y + player.image.height),
-        new Point(player.currentPoint.x + player.image.width, player.currentPoint.y + player.image.height)]
+        new Point(player.currentPoint.x + player.image.width, player.currentPoint.y + player.image.height)
+    ]
 
     for(var i = 0; i < 4; i++){
         var point = points[i];
