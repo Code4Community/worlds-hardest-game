@@ -94,11 +94,21 @@ function startGame() {
     {
         course = [];
 
+        let topLeftOriginPoint = new Point(0, 0);
+        let defaultEndPoint = new Point(1200, 500);
+        let currentPointOne = new Point(100, 0);
+        let currentPointTwo = new Point(300, 420);
+        let currentPointThree = new Point(600, 0);
+        let currentPointFour = new Point(900, 0);
+        let currentPointFive = new Point(1100, 0);
+
         obstacles = [
-            new Obstacle(uMichLogo, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0),
-            new Obstacle(uMichLogo, 80, 80, 0, -.25, 0, 0, 1200, 500, 300, 420),
-            new Obstacle(uMichLogo, 80, 80, .1, .2, 0, 0, 1200, 500, 600, 0),
-            new Obstacle(uMichLogo, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0),
+            // startPoint, endPoint, currentPoint
+            new Obstacle(uMichLogo, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointOne, 0, .25),
+            new Obstacle(uMichLogo, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointTwo, 0, -.25),
+            new Obstacle(uMichLogo, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointThree, .1, .2),
+            new Obstacle(uMichLogo, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointFour, -.1, .2),
+            new Obstacle(uMichLogo, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointFive)
         ];
     }
     else if(level == 2)
@@ -166,14 +176,14 @@ class Point {
 
 // Game obstacle
 class Obstacle {
-    constructor(imageSrc, imageWidth, imageHeight, speedX, speedY, startPointX, startPointY, endPointX, endPointY, currentPointX, currentPointY) {
+    constructor(imageSrc, imageWidth, imageHeight, startPoint, endPoint, currentPoint, speedX = 0.0, speedY = 0.0) {
         this.image = new Image(imageWidth, imageHeight);
         this.image.src = imageSrc;
+        this.startPoint = startPoint;
+        this.currentPoint = currentPoint;
+        this.endPoint = new Point(endPoint.x - (this.image.width), endPoint.y - (this.image.height));
         this.speedX = speedX;
         this.speedY = speedY;
-        this.startPoint = new Point(startPointX, startPointY);
-        this.currentPoint = new Point(currentPointX, currentPointY);
-        this.endPoint = new Point(endPointX - (this.image.width), endPointY - (this.image.height));
     }
 }
 
