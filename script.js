@@ -81,7 +81,7 @@ function startGame() {
     stopGame();
     
     var andrewFace = "https://greenecounty.alumni.osu.edu/wp-content/uploads/sites/25/2018/06/Andrew-Haberlandt.jpg";
-    var aleksFace = "https://scontent-sea1-1.cdninstagram.com/vp/e92b43bf1d1c01d0a298e3937733c06c/5DD9D0C6/t51.2885-19/s150x150/52486763_624841137975557_4315053367689740288_n.jpg?_nc_ht=scontent-sea1-1.cdninstagram.com";
+    var uMichLogo = "./assets/uMichLogo.png";
     var blockO = "https://i.pinimg.com/originals/e6/93/9b/e6939b21548bcf2d2a98b150c3867cdb.png"
 
     player = new Player(andrewFace, 80, 80, 3, 10, 10);
@@ -95,10 +95,10 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(aleksFace, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0),
-            //new Obstacle(aleksFace, 80, 80, 0, -.25, 0, 0, 1200, 500, 300, 420),
-            //new Obstacle(aleksFace, 80, 80, .1, .2, 0, 0, 1200, 500, 600, 0),
-            //new Obstacle(aleksFace, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0),
+            new Obstacle(uMichLogo, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0),
+            new Obstacle(uMichLogo, 80, 80, 0, -.25, 0, 0, 1200, 500, 300, 420),
+            new Obstacle(uMichLogo, 80, 80, .1, .2, 0, 0, 1200, 500, 600, 0),
+            new Obstacle(uMichLogo, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0),
         ];
     }
     else if(level == 2)
@@ -106,7 +106,7 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(aleksFace, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0)
+            new Obstacle(uMichLogo, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0)
         ];
     }
     else {
