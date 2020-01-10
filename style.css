@@ -4,6 +4,7 @@ nav.navbar.navbar-dark.bg-dark.bg-scarlet {
 
 canvas#board {
     border: 2px solid black;
+    background-image: url('./assets/FootballField.jpg');
 }
 
 button.btn-secondary {

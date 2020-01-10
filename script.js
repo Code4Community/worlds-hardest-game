@@ -13,7 +13,7 @@ var player;
 var obstacles;
 var level;
 var course;
-var objective;
+var goal;
 
 // Information for setInterval() and clearInterval()
 var intervalId;
@@ -80,12 +80,12 @@ function stopGame() {
 function startGame() {
     stopGame();
     
-    var andrewFace = "https://greenecounty.alumni.osu.edu/wp-content/uploads/sites/25/2018/06/Andrew-Haberlandt.jpg";
-    var uMichLogo = "./assets/uMichLogo.png";
-    var blockO = "https://i.pinimg.com/originals/e6/93/9b/e6939b21548bcf2d2a98b150c3867cdb.png"
+    var ohioStateLogoUrl = "./assets/OhioStateLogo.png";
+    var michiganLogoUrl = "./assets/MichiganLogo.png";
+    var goalImageUrl = "./assets/Goal.png"
 
-    player = new Player(andrewFace, 80, 80, 3, 10, 10);
-    objective = new Objective(blockO, 80, 80, new Point(1020, 210));
+    player = new Player(ohioStateLogoUrl, 60, 80, 3, 10, 10);
+    goal = new Objective(goalImageUrl, 75, 100, new Point(1090, 210));
 
     var levelDropdown = document.getElementById("level-select");
     level = levelDropdown.options[levelDropdown.selectedIndex].value;
@@ -95,10 +95,10 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(uMichLogo, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0),
-            new Obstacle(uMichLogo, 80, 80, 0, -.25, 0, 0, 1200, 500, 300, 420),
-            new Obstacle(uMichLogo, 80, 80, .1, .2, 0, 0, 1200, 500, 600, 0),
-            new Obstacle(uMichLogo, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0),
+            new Obstacle(michiganLogoUrl, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0),
+            new Obstacle(michiganLogoUrl, 80, 80, 0, -.25, 0, 0, 1200, 500, 300, 420),
+            new Obstacle(michiganLogoUrl, 80, 80, .1, .2, 0, 0, 1200, 500, 600, 0),
+            new Obstacle(michiganLogoUrl, 80, 80, -.1, .2, 0, 0, 1200, 500, 900, 0),
         ];
     }
     else if(level == 2)
@@ -106,7 +106,7 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(uMichLogo, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0)
+            new Obstacle(michiganLogoUrl, 80, 80, 0, .25, 0, 0, 1200, 500, 100, 0)
         ];
     }
     else {
@@ -234,10 +234,10 @@ function updateGameState() {
 }
 
 function atObjective() {
-    var objectiveLeft = objective.point.x;
-    var objectiveRight = objective.point.x + objective.image.width;
-    var objectiveTop = objective.point.y;
-    var objectiveBottom = objective.point.y + objective.image.height;
+    var objectiveLeft = goal.point.x;
+    var objectiveRight = goal.point.x + goal.image.width;
+    var objectiveTop = goal.point.y;
+    var objectiveBottom = goal.point.y + goal.image.height;
 
     var points = [new Point(player.currentPoint.x, player.currentPoint.y), 
         new Point(player.currentPoint.x + player.image.width, player.currentPoint.y),
@@ -260,9 +260,9 @@ function hitObstacle() {
     for(var n = 0; n < obstacles.length; n++) {
         var obstacle = obstacles[n];
         var obstacleLeft = obstacle.currentPoint.x;
-        var obstacleRight = obstacle.currentPoint.x + objective.image.width;
+        var obstacleRight = obstacle.currentPoint.x + goal.image.width;
         var obstacleTop = obstacle.currentPoint.y;
-        var obstacleBottom = obstacle.currentPoint.y + objective.image.height;
+        var obstacleBottom = obstacle.currentPoint.y + goal.image.height;
 
         var points = [new Point(player.currentPoint.x, player.currentPoint.y), 
             new Point(player.currentPoint.x + player.image.width, player.currentPoint.y),
@@ -328,7 +328,7 @@ function drawCourse()
 
 function drawObjective()
 {
-    drawImage(objective.image, objective.point);
+    drawImage(goal.image, goal.point);
 }
 
 function clearCanvas() {
