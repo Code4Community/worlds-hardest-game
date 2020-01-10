@@ -250,8 +250,10 @@ function atObjective() {
         {
             stopGame();
             clearCanvas();
-            context.font = "30px Arial";
-            context.fillText("You Won!!!", 600, 250);    
+            context.font = "72px Arial";
+            context.fillStyle = "red";
+            context.textAlign = "center";
+            context.fillText("You Win!", canvas.width / 2, canvas.height / 2);    
         }
     }
 }
@@ -275,8 +277,10 @@ function hitObstacle() {
             {
                 stopGame();
                 clearCanvas();
-                context.font = "30px Arial";
-                context.fillText("You Lost!!!", 600, 250);    
+                context.font = "72px Arial";
+                context.fillStyle = "blue";
+                context.textAlign = "center";
+                context.fillText("You Lose :(", canvas.width / 2, canvas.height / 2);   
             }
         }
     }
