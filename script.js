@@ -51,15 +51,6 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
-window.onload=function(){
-    level_select = document.getElementById('level-select');
-    level_select.addEventListener('change', () => {
-        stopGame();
-        let playInnerHtml = "<i class='material-icons float-left'>play_arrow</i>&nbsp;Play";
-        document.getElementById("playRestartButton").innerHTML = playInnerHtml;
-    })
-}
-
 function loadGame() {
     xMin = 0;
     xMax = 1200;
@@ -77,6 +68,13 @@ function loadGame() {
     down = false;
     right = false;
     left = false;
+
+    document.getElementById('level-select').addEventListener('change', (e) => {
+        stopGame();
+        clearCanvas();
+        let playInnerHtml = "<i class='material-icons float-left'>play_arrow</i>&nbsp;Play";
+        document.getElementById("playRestartButton").innerHTML = playInnerHtml;
+    });
 }
 
 function stopGame() {
