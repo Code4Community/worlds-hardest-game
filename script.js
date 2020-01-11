@@ -123,7 +123,7 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(uMichLogo, 80, 80, 0, .25, new Point(0, 0), new Point(1200, 500), new Point(100, 0))
+            new Obstacle(michiganLogoUrl, 80, 80, 0, .25, new Point(0, 0), new Point(1200, 500), new Point(100, 0))
         ];
     }
     else {
