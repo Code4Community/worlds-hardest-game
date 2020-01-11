@@ -191,11 +191,6 @@ class Obstacle {
         this.endPoint = new Point(endPoint.x - (this.image.width), endPoint.y - (this.image.height));
         this.speedX = speedX;
         this.speedY = speedY;
-        this.startPoint = startPoint;
-        this.currentPoint = currentPoint;
-        this.endPoint = endPoint;
-        this.endPoint.x = this.endPoint.x - this.image.width;
-        this.endPoint.y = this.endPoint.y - this.image.height;
     }
 }
 
