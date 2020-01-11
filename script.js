@@ -104,11 +104,11 @@ function startGame() {
 
         obstacles = [
             // startPoint, endPoint, currentPoint
-            new Obstacle(uMichLogo, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointOne, 0, .25),
-            new Obstacle(uMichLogo, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointTwo, 0, -.25),
-            new Obstacle(uMichLogo, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointThree, .1, .2),
-            new Obstacle(uMichLogo, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointFour, -.1, .2),
-            new Obstacle(uMichLogo, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointFive)
+            new Obstacle(michiganLogoUrl, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointOne, 0, .25),
+            new Obstacle(michiganLogoUrl, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointTwo, 0, -.25),
+            new Obstacle(michiganLogoUrl, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointThree, .1, .2),
+            new Obstacle(michiganLogoUrl, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointFour, -.1, .2),
+            new Obstacle(michiganLogoUrl, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointFive)
         ];
     }
     else if(level == 2)
