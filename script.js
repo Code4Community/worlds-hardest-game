@@ -165,9 +165,14 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(100, 0), 1, 1),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(200, 0), 1, 0),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(300, 0), 0, 1),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(0, 120), 1, 0),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(0, 320), 1, 0),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(100, 0), 0, .75),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(300, 0), 0, .8),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(500, 0), 0, .85),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(700, 0), 0, .9),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(900, 0), 0, .95),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(1100, 0), 0, 1),
         ];
     }
     else {
