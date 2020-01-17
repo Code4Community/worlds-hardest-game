@@ -107,11 +107,11 @@ function startGame() {
 
         obstacles = [
             // startPoint, endPoint, currentPoint
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointOne, 0, .25),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointTwo, 0, -.25),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointThree, .1, .2),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointFour, -.1, .2),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointFive)
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointOne, 0, .17),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointTwo, 0, .15),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointThree, 0, .13),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointFour, 0, .12),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointFive, 0, .11)
         ];
     }
     else if(level == 2)
@@ -119,9 +119,8 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(100, 0), .5, .5),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(200, 0), .5, 0),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(300, 0), 0, .5),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(100, 0), .1, .2),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(100, 0), .1, .2)
         ];
     }
     else if(level == 3)
