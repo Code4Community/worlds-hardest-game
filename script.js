@@ -84,7 +84,7 @@ function startGame() {
     var michiganLogoUrl = "./assets/MichiganLogo.png";
     var goalImageUrl = "./assets/Goal.png"
 
-    player = new Player(ohioStateLogoUrl, 60, 80, 3, new Point(10, 10));
+    player = new Player(ohioStateLogoUrl, 60, 80, 2, new Point(10, 10));
     goal = new Objective(goalImageUrl, 75, 100, new Point(1090, 210));
 
     var levelDropdown = document.getElementById("level-select");
@@ -117,7 +117,19 @@ function startGame() {
         course = [];
 
         obstacles = [
-            new Obstacle(michiganLogoUrl, 80, 80, 0, .25, new Point(0, 0), new Point(1200, 500), new Point(100, 0))
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(100, 0), .5, .5),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(200, 0), .5, 0),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(300, 0), 0, .5),
+        ];
+    }
+    else if(level == 3)
+    {
+        course = [];
+
+        obstacles = [
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(100, 0), 1, 1),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(200, 0), 1, 0),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(300, 0), 0, 1),
         ];
     }
     else {
@@ -257,7 +269,7 @@ function atObjective() {
             context.font = "72px Arial";
             context.fillStyle = "red";
             context.textAlign = "center";
-            context.fillText("You Win!", canvas.width / 2, canvas.height / 2);    
+            context.fillText("TOUCHDOWN!", canvas.width / 2, canvas.height / 2);    
         }
     }
 }
@@ -284,7 +296,7 @@ function hitObstacle() {
                 context.font = "72px Arial";
                 context.fillStyle = "blue";
                 context.textAlign = "center";
-                context.fillText("You Lose :(", canvas.width / 2, canvas.height / 2);   
+                context.fillText("You got tackled!", canvas.width / 2, canvas.height / 2);   
             }
         }
     }
