@@ -91,7 +91,7 @@ function startGame() {
     var michiganLogoUrl = "./assets/MichiganLogo.png";
     var goalImageUrl = "./assets/Goal.png"
 
-    player = new Player(ohioStateLogoUrl, 60, 80, 3, new Point(10, 10));
+    player = new Player(ohioStateLogoUrl, 60, 80, 2, new Point(10, 10));
     goal = new Objective(goalImageUrl, 75, 100, new Point(1090, 210));
 
     var levelDropdown = document.getElementById("level-select");
@@ -262,7 +262,7 @@ function atObjective() {
             context.font = "72px Arial";
             context.fillStyle = "red";
             context.textAlign = "center";
-            context.fillText("You Win!", canvas.width / 2, canvas.height / 2);    
+            context.fillText("TOUCHDOWN!", canvas.width / 2, canvas.height / 2);    
         }
     }
 }
@@ -289,7 +289,7 @@ function hitObstacle() {
                 context.font = "72px Arial";
                 context.fillStyle = "blue";
                 context.textAlign = "center";
-                context.fillText("You Lose :(", canvas.width / 2, canvas.height / 2);   
+                context.fillText("You got tackled!", canvas.width / 2, canvas.height / 2);   
             }
         }
     }
