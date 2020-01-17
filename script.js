@@ -28,10 +28,46 @@ var down = false;
 var right = false;
 var left = false;
 
+// 2D point within bounds of screen
+class Point {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+
+        this.checkPoint();
+    }
+
+    checkPoint() {
+        if (this.x < X_MIN || this.x > X_MAX) {
+            alert("x-coordinate " + this.x + " is out of range, xMin = " + X_MIN + " and xMax = " + X_MAX);
+        }
+        if (this.y < Y_MIN || this.y > Y_MAX) {
+            alert("y-coordinate " + this.y + " is out of range, yMin = " + Y_MIN + " and yMax = " + Y_MAX);
+        }
+    }
+    
+    subtractX(subtractFromX) {
+        this.x -= subtractFromX;
+    }
+
+    subtractY(subtractFromY) {
+        this.y -= subtractFromY;
+    }
+
+    addX(addToX) {
+        this.x += addToX;
+    }
+
+    addY(addToY) {
+        this.y += addToY;
+    }
+}
+
 // Useful constants
 var topLeftOriginPoint = new Point(X_MIN, Y_MIN);
 var defaultEndPoint = new Point(X_MAX, Y_MAX);
 
+// Reads the keyboard for keystrokes - changing these will break thet game
 document.addEventListener('keydown', (e) => {
     e.preventDefault();
     if (e.code === "ArrowUp") {
@@ -45,6 +81,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Still reading keystrokes
 document.addEventListener('keyup', (e) => {
     e.preventDefault();
     if (e.code === "ArrowUp") {
@@ -150,41 +187,6 @@ class Objective {
         this.image = new Image(width, height)
         this.image.src = image;
         this.point = point;
-    }
-}
-
-// 2D point within bounds of screen
-class Point {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-
-        this.checkPoint();
-    }
-
-    checkPoint() {
-        if (this.x < X_MIN || this.x > X_MAX) {
-            alert("x-coordinate " + this.x + " is out of range, xMin = " + X_MIN + " and xMax = " + X_MAX);
-        }
-        if (this.y < Y_MIN || this.y > Y_MAX) {
-            alert("y-coordinate " + this.y + " is out of range, yMin = " + Y_MIN + " and yMax = " + Y_MAX);
-        }
-    }
-    
-    subtractX(subtractFromX) {
-        this.x -= subtractFromX;
-    }
-
-    subtractY(subtractFromY) {
-        this.y -= subtractFromY;
-    }
-
-    addX(addToX) {
-        this.x += addToX;
-    }
-
-    addY(addToY) {
-        this.y += addToY;
     }
 }
 
