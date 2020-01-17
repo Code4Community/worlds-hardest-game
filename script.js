@@ -1,14 +1,15 @@
 // World's Hardest Game, 2019 - 2020
 
-// Details for the screen and its size
+// Details for the screen and its size - Changing these will not help you win
 const X_MIN = 0;
 const X_MAX = 1200;
 const Y_MIN = 0;
 const Y_MAX = 500;
 
+// Controls the height and width of an obstacle... smaller obstacles might be easier to avoid
 const DEF_OBSTACLE_SIZE = 80;
 
-// Global variables for the HTML5 canvas
+// Global variables for the HTML5 canvas - Removing these will likely break the game
 var canvas;
 var context;
 var player;
@@ -26,6 +27,10 @@ var up = false;
 var down = false;
 var right = false;
 var left = false;
+
+// Useful constants
+var topLeftOriginPoint = new Point(X_MIN, Y_MIN);
+var defaultEndPoint = new Point(X_MAX, Y_MAX);
 
 document.addEventListener('keydown', (e) => {
     e.preventDefault();
@@ -93,9 +98,6 @@ function startGame() {
     if(level == 1)
     {
         course = [];
-
-        let topLeftOriginPoint = new Point(X_MIN, Y_MIN);
-        let defaultEndPoint = new Point(X_MAX, Y_MAX);
         
         let currentPointOne = new Point(100, 0);
         let currentPointTwo = new Point(300, 420);
