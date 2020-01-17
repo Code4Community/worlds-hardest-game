@@ -1,10 +1,12 @@
-// World's Hardest Game, 2019
+// World's Hardest Game, 2019 - 2020
 
 // Details for the screen and its size
-var xMin;
-var xMax;
-var yMin;
-var yMax;
+const X_MIN = 0;
+const X_MAX = 1200;
+const Y_MIN = 0;
+const Y_MAX = 500;
+
+const DEF_OBSTACLE_SIZE = 80;
 
 // Global variables for the HTML5 canvas
 var canvas;
@@ -20,10 +22,10 @@ var intervalId;
 const updateInterval = 10; // interval in milliseconds
 
 // Movement booleans for keyboard input from user
-var up;
-var down;
-var right;
-var left;
+var up = false;
+var down = false;
+var right = false;
+var left = false;
 
 document.addEventListener('keydown', (e) => {
     e.preventDefault();
@@ -52,22 +54,13 @@ document.addEventListener('keyup', (e) => {
 });
 
 function loadGame() {
-    xMin = 0;
-    xMax = 1200;
-    yMin = 0;
-    yMax = 500;
     
     canvas = document.getElementById("board");
-    canvas.width = xMax;
-    canvas.height = yMax;
+    canvas.width = X_MAX;
+    canvas.height = Y_MAX;
     context = canvas.getContext("2d");
     
     intervalId = null; 
-
-    up = false;
-    down = false;
-    right = false;
-    left = false;
 
     document.getElementById('level-select').addEventListener('change', (e) => {
         stopGame();
@@ -101,21 +94,22 @@ function startGame() {
     {
         course = [];
 
-        let topLeftOriginPoint = new Point(0, 0);
-        let defaultEndPoint = new Point(1200, 500);
+        let topLeftOriginPoint = new Point(X_MIN, Y_MIN);
+        let defaultEndPoint = new Point(X_MAX, Y_MAX);
+        
         let currentPointOne = new Point(100, 0);
         let currentPointTwo = new Point(300, 420);
         let currentPointThree = new Point(600, 0);
         let currentPointFour = new Point(900, 0);
-        let currentPointFive = new Point(1100, 0);
+        let currentPointFive = new Point(500, 50);
 
         obstacles = [
             // startPoint, endPoint, currentPoint
-            new Obstacle(michiganLogoUrl, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointOne, 0, .17),
-            new Obstacle(michiganLogoUrl, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointTwo, 0, .15),
-            new Obstacle(michiganLogoUrl, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointThree, 0, .13),
-            new Obstacle(michiganLogoUrl, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointFour, 0, .12),
-            new Obstacle(michiganLogoUrl, 80, 80, topLeftOriginPoint, defaultEndPoint, currentPointFive, 0, .11)
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointOne, 0, .17),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointTwo, 0, .15),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointThree, 0, .13),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointFour, 0, .12),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointFive, 0, .11)
         ];
     }
     else if(level == 2)
@@ -125,6 +119,16 @@ function startGame() {
         obstacles = [
             new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(100, 0), .1, .2),
             new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(100, 0), .1, .2)
+        ];
+    }
+    else if(level == 3)
+    {
+        course = [];
+
+        obstacles = [
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(100, 0), 1, 1),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(200, 0), 1, 0),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 0), new Point(1200, 500), new Point(300, 0), 0, 1),
         ];
     }
     else {
@@ -157,11 +161,11 @@ class Point {
     }
 
     checkPoint() {
-        if (this.x < xMin || this.x > xMax) {
-            alert("x-coordinate " + this.x + " is out of range, xMin = " + xMin + " and xMax = " + xMax);
+        if (this.x < X_MIN || this.x > X_MAX) {
+            alert("x-coordinate " + this.x + " is out of range, xMin = " + X_MIN + " and xMax = " + X_MAX);
         }
-        if (this.y < yMin || this.y > yMax) {
-            alert("y-coordinate " + this.y + " is out of range, yMin = " + yMin + " and yMax = " + yMax);
+        if (this.y < Y_MIN || this.y > Y_MAX) {
+            alert("y-coordinate " + this.y + " is out of range, yMin = " + Y_MIN + " and yMax = " + Y_MAX);
         }
     }
     
@@ -184,6 +188,7 @@ class Point {
 
 // Game obstacle
 class Obstacle {
+    // Obstacle is stationary if optional speed parameters are omitted
     constructor(imageSrc, imageWidth, imageHeight, startPoint, endPoint, currentPoint, speedX = 0.0, speedY = 0.0) {
         this.image = new Image(imageWidth, imageHeight);
         this.image.src = imageSrc;
@@ -196,36 +201,36 @@ class Obstacle {
 }
 
 class Player {
-    constructor(imageSrc, imageWidth, imageHeight, speed, point) {
+    constructor(imageSrc, imageWidth, imageHeight, speed, startPoint) {
         this.image = new Image(imageWidth, imageHeight);
         this.image.src = imageSrc;
         this.speed = speed;
-        this.currentPoint = point;
+        this.currentPoint = startPoint;
     }
 
     moveRight() {
-        if (this.currentPoint.x  + player.speed <= xMax - this.image.width)
+        if (this.currentPoint.x  + player.speed <= X_MAX - this.image.width)
         {
             this.currentPoint.addX(player.speed);
         }
     }
 
     moveLeft() {
-        if (this.currentPoint.x - player.speed >= xMin)
+        if (this.currentPoint.x - player.speed >= X_MIN)
         {
             this.currentPoint.subtractX(player.speed);
         }
     }
 
     moveUp() {
-        if (this.currentPoint.y - player.speed >= yMin)
+        if (this.currentPoint.y - player.speed >= Y_MIN)
         {
             this.currentPoint.subtractY(player.speed);
         }
     }
 
     moveDown() {
-        if (this.currentPoint.y + player.speed <= yMax - this.image.height)
+        if (this.currentPoint.y + player.speed <= Y_MAX - this.image.height)
         {
             this.currentPoint.addY(player.speed);
         }
