@@ -122,11 +122,11 @@ function stopGame() {
 function startGame() {
     stopGame();
     
-    var ohioStateLogoUrl = "./assets/OhioStateLogo.png";
+    var ohioStateLogoUrl = "./assets/OhioStateLogo.jpg";
     var michiganLogoUrl = "./assets/MichiganLogo.png";
     var goalImageUrl = "./assets/Goal.png"
 
-    player = new Player(ohioStateLogoUrl, 60, 80, 2, new Point(10, 10));
+    player = new Player(ohioStateLogoUrl, 80, 80, 2, new Point(10, 10));
     goal = new Objective(goalImageUrl, 75, 100, new Point(1090, 210));
 
     var levelDropdown = document.getElementById("level-select");
