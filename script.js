@@ -254,10 +254,10 @@ class Player {
 }
 
 function updateGameState() {
-    moveAndDrawObstacles();
+    clearCanvas();
     moveAndDrawPlayer();
-    drawCourse();
     drawObjective();
+    moveAndDrawObstacles();
     atObjective();
     hitObstacle();
 }
@@ -335,7 +335,6 @@ function moveAndDrawPlayer() {
 }
 
 function moveAndDrawObstacles() {
-    clearCanvas();
     for (var i = 0; i < obstacles.length; i++)
     {
         //calculate future position of the obstacle
@@ -349,16 +348,6 @@ function moveAndDrawObstacles() {
 
         //draw the obstacle
         drawImage(obstacles[i].image, obstacles[i].currentPoint);
-    }
-}
-
-function drawCourse()
-{
-    for(var i = 0; i < course.length; i++)
-    {
-        var rect = course[i];
-        context.fillStyle = rect.color;
-        context.fillRect(rect.position.x, rect.position.y, rect.width, rect.height);
     }
 }
 
