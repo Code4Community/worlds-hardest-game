@@ -372,11 +372,6 @@ function clearCanvas() {
 
 // Draws an image object on the canvas at the given point
 function drawImage(image, point) {
-
-    //console.log("image.width = " + image.width);
-    //console.log("image.height = " + image.height);
-
-    // Draw the image at the point
     context.drawImage(image, point.x, point.y, image.width, image.height);
 }
 
