@@ -124,10 +124,10 @@ function startGame() {
     
     var ohioStateLogoUrl = "./assets/OhioStateLogo.jpg";
     var michiganLogoUrl = "./assets/MichiganLogo.png";
-    var goalImageUrl = "./assets/Goal.png"
+    var goalImageUrl = "./assets/EndZone.png"
 
     player = new Player(ohioStateLogoUrl, 80, 80, 2, new Point(10, 10));
-    goal = new Objective(goalImageUrl, 75, 100, new Point(1090, 210));
+    goal = new Objective(goalImageUrl, 125, 500, new Point(1075, 0));
 
     var levelDropdown = document.getElementById("level-select");
     level = levelDropdown.options[levelDropdown.selectedIndex].value;
@@ -293,9 +293,9 @@ function hitObstacle() {
     for(var n = 0; n < obstacles.length; n++) {
         var obstacle = obstacles[n];
         var obstacleLeft = obstacle.currentPoint.x;
-        var obstacleRight = obstacle.currentPoint.x + goal.image.width;
+        var obstacleRight = obstacle.currentPoint.x + obstacle.image.width;
         var obstacleTop = obstacle.currentPoint.y;
-        var obstacleBottom = obstacle.currentPoint.y + goal.image.height;
+        var obstacleBottom = obstacle.currentPoint.y + obstacle.image.height;
 
         var points = [new Point(player.currentPoint.x, player.currentPoint.y), 
             new Point(player.currentPoint.x + player.image.width, player.currentPoint.y),
@@ -306,6 +306,7 @@ function hitObstacle() {
             var point = points[i];
             if(obstacleLeft < point.x && point.x < obstacleRight && obstacleTop < point.y && point.y < obstacleBottom)
             {
+                debugger
                 stopGame();
                 clearCanvas();
                 context.font = "72px Arial";
