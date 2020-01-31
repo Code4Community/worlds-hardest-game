@@ -11,3 +11,7 @@ button.btn-secondary {
     background-color: #666666;
     border-color: #666666;
 }
+
+#nextLevelButton {
+    display: none;
+}

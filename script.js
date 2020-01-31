@@ -28,6 +28,15 @@ var down = false;
 var right = false;
 var left = false;
 
+function nextLevel() {
+    document.getElementById('nextLevelButton').style.display = "none";
+    level++;
+    clearCanvas();
+    let playInnerHtml = "<i class='material-icons float-left'>play_arrow</i>&nbsp;Play";
+    document.getElementById("playRestartButton").innerHTML = playInnerHtml;
+    document.getElementById('level-select').value = level.toString();
+}
+
 // Loads the game
 function loadGame() {
     //Sets up the canvas and context.  Links to html.
@@ -417,6 +426,9 @@ function atObjective() {
             // This is what happens if the player wins
             stopGame();
             clearCanvas();
+            if(level != 3) {
+                document.getElementById('nextLevelButton').style.display = "inline";
+            }
             context.font = "72px Arial";
             context.fillStyle = "red";
             context.textAlign = "center";
