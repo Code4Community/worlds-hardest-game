@@ -224,6 +224,104 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
+function loadGame() {
+    
+    canvas = document.getElementById("board");
+    canvas.width = X_MAX;
+    canvas.height = Y_MAX;
+    context = canvas.getContext("2d");
+    
+    intervalId = null; 
+
+    document.getElementById('level-select').addEventListener('change', (e) => {
+        stopGame();
+        clearCanvas();
+        let playInnerHtml = "<i class='material-icons float-left'>play_arrow</i>&nbsp;Play";
+        document.getElementById("playRestartButton").innerHTML = playInnerHtml;
+    });
+}
+
+function stopGame() {
+    if (intervalId != null) {
+        clearInterval(intervalId);
+    }
+    intervalId = null;
+}
+
+function startGame() {
+    stopGame();
+    
+    var ohioStateLogoUrl = "./assets/OhioStateLogo.jpg";
+    var michiganLogoUrl = "./assets/MichiganLogo.png";
+    var goalImageUrl = "./assets/EndZone.png"
+
+    player = new Player(ohioStateLogoUrl, 80, 80, 2, new Point(10, 10));
+    goal = new Objective(goalImageUrl, 125, 500, new Point(1075, 0));
+
+    var levelDropdown = document.getElementById("level-select");
+    level = levelDropdown.options[levelDropdown.selectedIndex].value;
+
+    if(level == 1)
+    {
+        course = [];
+        
+        let currentPointOne = new Point(100, 0);
+        let currentPointTwo = new Point(300, 420);
+        let currentPointThree = new Point(600, 0);
+        let currentPointFour = new Point(900, 0);
+        let currentPointFive = new Point(500, 50);
+
+        obstacles = [
+            // startPoint, endPoint, currentPoint
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointOne, 0, .17),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointTwo, 0, .15),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointThree, 0, .13),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointFour, 0, .12),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointFive, 0, .11)
+        ];
+    }
+    else if(level == 2)
+    {
+        course = [];
+
+        obstacles = [
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(100, 0), new Point(1200, 500), new Point(100, 0), .1, .2),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(300, 0), new Point(1200, 500), new Point(300, 0), .1, .2),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(500, 0), new Point(1200, 500), new Point(500, 0), .1, .2),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(700, 0), new Point(1200, 500), new Point(700, 0), .1, .2),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(500, 0), new Point(1200, 500), new Point(500, 0), .1, .2),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 400), new Point(1200, 500), new Point(1000, 400), .5, 0),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 300), new Point(1200, 500), new Point(1000, 300), .5, 0),
+            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 200), new Point(1200, 500), new Point(1000, 200), .5, 0),
+
+        ];
+    }
+    else if(level == 3)
+    {
+        course = [];
+
+        obstacles = [
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(0, 120), 1, 0),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(0, 320), 1, 0),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(100, 0), 0, .75),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(300, 0), 0, .8),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(500, 0), 0, .85),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(700, 0), 0, .9),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(900, 0), 0, .95),
+            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(1100, 0), 0, 1),
+        ];
+    }
+    else {
+        console.log("No level selected. ");
+    }
+
+    let restartInnerHtml = "<i class='material-icons float-left'>replay</i>Restart";
+
+    document.getElementById("playRestartButton").innerHTML = restartInnerHtml;
+
+    intervalId = setInterval(updateGameState, updateInterval);
+}
+
 class Objective {
     constructor(image, width, height, point)
     {
@@ -285,9 +383,10 @@ class Player {
 }
 
 function updateGameState() {
-    moveAndDrawObstacles();
+    clearCanvas();
     moveAndDrawPlayer();
     drawObjective();
+    moveAndDrawObstacles();
     atObjective();
     hitObstacle();
 }
@@ -330,9 +429,9 @@ function hitObstacle() {
     for(var n = 0; n < obstacles.length; n++) {
         var obstacle = obstacles[n];
         var obstacleLeft = obstacle.currentPoint.x;
-        var obstacleRight = obstacle.currentPoint.x + goal.image.width;
+        var obstacleRight = obstacle.currentPoint.x + obstacle.image.width;
         var obstacleTop = obstacle.currentPoint.y;
-        var obstacleBottom = obstacle.currentPoint.y + goal.image.height;
+        var obstacleBottom = obstacle.currentPoint.y + obstacle.image.height;
 
         var points = [new Point(player.currentPoint.x, player.currentPoint.y), 
             new Point(player.currentPoint.x + player.image.width, player.currentPoint.y),
@@ -343,6 +442,7 @@ function hitObstacle() {
             var point = points[i];
             if(obstacleLeft < point.x && point.x < obstacleRight && obstacleTop < point.y && point.y < obstacleBottom)
             {
+                debugger
                 stopGame();
                 clearCanvas();
                 context.font = "72px Arial";
@@ -371,7 +471,6 @@ function moveAndDrawPlayer() {
 }
 
 function moveAndDrawObstacles() {
-    clearCanvas();
     for (var i = 0; i < obstacles.length; i++)
     {
         //calculate future position of the obstacle
