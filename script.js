@@ -7,7 +7,7 @@ const Y_MIN = 0;
 const Y_MAX = 500;
 
 // Controls the height and width of an obstacle... smaller obstacles might be easier to avoid
-const DEF_OBSTACLE_SIZE = 80;
+const OBSTACLE_SIZE = 80;
 
 // Global variables for the HTML5 canvas - Removing these will likely break the game
 var canvas;
@@ -20,13 +20,142 @@ var goal;
 
 // Information for setInterval() and clearInterval()
 var intervalId;
-const updateInterval = 10; // interval in milliseconds
+const updateInterval = 10;
 
 // Movement booleans for keyboard input from user
 var up = false;
 var down = false;
 var right = false;
 var left = false;
+
+// Loads the game
+function loadGame() {
+    //Sets up the canvas and context.  Links to html.
+    canvas = document.getElementById("board");
+    canvas.width = X_MAX;
+    canvas.height = Y_MAX;
+    context = canvas.getContext("2d");
+    
+    intervalId = null; 
+
+    // Adds action listener for level select.
+    document.getElementById('level-select').addEventListener('change', (e) => {
+        stopGame();
+        clearCanvas();
+        let playInnerHtml = "<i class='material-icons float-left'>play_arrow</i>&nbsp;Play";
+        document.getElementById("playRestartButton").innerHTML = playInnerHtml;
+    });
+}
+
+// Stops the game.
+function stopGame() {
+    if (intervalId != null) {
+        clearInterval(intervalId);
+    }
+    intervalId = null;
+}
+
+// Starts the game and sets up levels
+function startGame() {
+    stopGame();
+
+    /*
+        As you can see below, I talk a lot about x and y coordinates.  
+        The space you move around in in this game is very similar to what you learn in math class.
+        The top left corner is (0,0) and the bottom left corner is (1200, 500).
+        Ask us if this confuses you!
+    */
+    
+    /*
+        These are the url's to the images for different parts of the game.
+        You can change them to different image URL's from the internet.
+        Just paste it right in!
+    */
+    var playerLogoUrl = "./assets/OhioStateLogo.jpg";
+    var obstacleLogoUrl = "./assets/MichiganLogo.png";
+    var goalImageUrl = "./assets/Goal.png"
+
+    /*
+        The player is the person that you move around the screen and try to get to the endzone.
+
+        The first item after the parentheses is the url of the player, you can change that above.
+        The second item is the width of the player image.
+        The third item is the height of the player image.
+        The fourth item is the speed at which the player moves at.
+        The fifth item is the starting point of the player.
+    */
+    player = new Player(playerLogoUrl, 80, 80, 2, new Point(10, 10));
+
+    /*
+        The goal is the thing that you are trying to reach.
+        The default goal image is a transparent rectangle over the endzone.
+
+        The first item is the url of the goal which you can change above.
+        The second item is the width of the goal image.
+        The thrid item is the height of the goal image.
+        The fourth item is the point where the goal image is drawn.
+    */
+    goal = new Objective(goalImageUrl, 75, 100, new Point(1090, 210));
+
+    // This is the select to switch between levels.  We suggest that you do not mess with this.
+    var levelDropdown = document.getElementById("level-select");
+    level = levelDropdown.options[levelDropdown.selectedIndex].value;
+
+    if(level == 1) {        
+        obstacles = [
+            /*  
+                The first item in the parentheses is the url of the obstacle image.  You can find that above if you want to change it.
+                The second item is the width of the obstacle image, we have a default size. You can change it.
+                The third item is the height of the obstacle image, we have a default size here.  You can change it.
+                The fourth item is the top limit of how far the image can travel.  This is a Point object so you format it like the last parameter. You can change this.
+                The fifth item is the lower limit of how far the image can travel.  This is a Point object so you format it like the last parameter. You can change this.
+                The sixth item is where the point starts. The first item in the parentheses after the Point is the x value and the second is the y value.  You can change this.
+                The seventh item is the speed in the x direction of the obstacle. You can change this.
+                The eighth item is the speed in the y direction of the obstacle. You can change this.
+            */
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(100, 0), 0, .17),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(300, 420), 0, .15),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(600, 0), 0, .13),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(900, 0), 0, .12),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(500, 50), 0, .11)
+        ];
+    }
+    else if(level == 2) {
+        obstacles = [
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(100, 0), new Point(1200, 500), new Point(100, 0), .1, .2),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(300, 0), new Point(1200, 500), new Point(300, 0), .1, .2),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(500, 0), new Point(1200, 500), new Point(500, 0), .1, .2),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(700, 0), new Point(1200, 500), new Point(700, 0), .1, .2),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(500, 0), new Point(1200, 500), new Point(500, 0), .1, .2),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(0, 400), new Point(1200, 500), new Point(1000, 400), .5, 0),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(0, 300), new Point(1200, 500), new Point(1000, 300), .5, 0),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(0, 200), new Point(1200, 500), new Point(1000, 200), .5, 0),
+
+        ];
+    }
+    else if(level == 3)
+    {
+        obstacles = [
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(0, 120), 1, 0),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(0, 320), 1, 0),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(100, 0), 0, .75),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(300, 0), 0, .8),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(500, 0), 0, .85),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(700, 0), 0, .9),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(900, 0), 0, .95),
+            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(1100, 0), 0, 1),
+        ];
+    }
+
+    // The HTML for the restart button that populates once we start the game
+    let restartInnerHtml = "<i class='material-icons float-left'>replay</i>Restart";
+
+    // This write the html into the page
+    document.getElementById("playRestartButton").innerHTML = restartInnerHtml;
+
+    // Starts the setInterval updater
+    intervalId = setInterval(updateGameState, updateInterval);
+}
 
 // 2D point within bounds of screen
 class Point {
@@ -95,104 +224,6 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
-function loadGame() {
-    
-    canvas = document.getElementById("board");
-    canvas.width = X_MAX;
-    canvas.height = Y_MAX;
-    context = canvas.getContext("2d");
-    
-    intervalId = null; 
-
-    document.getElementById('level-select').addEventListener('change', (e) => {
-        stopGame();
-        clearCanvas();
-        let playInnerHtml = "<i class='material-icons float-left'>play_arrow</i>&nbsp;Play";
-        document.getElementById("playRestartButton").innerHTML = playInnerHtml;
-    });
-}
-
-function stopGame() {
-    if (intervalId != null) {
-        clearInterval(intervalId);
-    }
-    intervalId = null;
-}
-
-function startGame() {
-    stopGame();
-    
-    var ohioStateLogoUrl = "./assets/OhioStateLogo.jpg";
-    var michiganLogoUrl = "./assets/MichiganLogo.png";
-    var goalImageUrl = "./assets/Goal.png"
-
-    player = new Player(ohioStateLogoUrl, 80, 80, 2, new Point(10, 10));
-    goal = new Objective(goalImageUrl, 75, 100, new Point(1090, 210));
-
-    var levelDropdown = document.getElementById("level-select");
-    level = levelDropdown.options[levelDropdown.selectedIndex].value;
-
-    if(level == 1)
-    {
-        course = [];
-        
-        let currentPointOne = new Point(100, 0);
-        let currentPointTwo = new Point(300, 420);
-        let currentPointThree = new Point(600, 0);
-        let currentPointFour = new Point(900, 0);
-        let currentPointFive = new Point(500, 50);
-
-        obstacles = [
-            // startPoint, endPoint, currentPoint
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointOne, 0, .17),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointTwo, 0, .15),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointThree, 0, .13),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointFour, 0, .12),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, currentPointFive, 0, .11)
-        ];
-    }
-    else if(level == 2)
-    {
-        course = [];
-
-        obstacles = [
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(100, 0), new Point(1200, 500), new Point(100, 0), .1, .2),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(300, 0), new Point(1200, 500), new Point(300, 0), .1, .2),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(500, 0), new Point(1200, 500), new Point(500, 0), .1, .2),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(700, 0), new Point(1200, 500), new Point(700, 0), .1, .2),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(500, 0), new Point(1200, 500), new Point(500, 0), .1, .2),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 400), new Point(1200, 500), new Point(1000, 400), .5, 0),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 300), new Point(1200, 500), new Point(1000, 300), .5, 0),
-            new Obstacle(michiganLogoUrl, 80, 80, new Point(0, 200), new Point(1200, 500), new Point(1000, 200), .5, 0),
-
-        ];
-    }
-    else if(level == 3)
-    {
-        course = [];
-
-        obstacles = [
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(0, 120), 1, 0),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(0, 320), 1, 0),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(100, 0), 0, .75),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(300, 0), 0, .8),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(500, 0), 0, .85),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(700, 0), 0, .9),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(900, 0), 0, .95),
-            new Obstacle(michiganLogoUrl, DEF_OBSTACLE_SIZE, DEF_OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(1100, 0), 0, 1),
-        ];
-    }
-    else {
-        console.log("No level selected. ");
-    }
-
-    let restartInnerHtml = "<i class='material-icons float-left'>replay</i>Restart";
-
-    document.getElementById("playRestartButton").innerHTML = restartInnerHtml;
-
-    intervalId = setInterval(updateGameState, updateInterval);
-}
-
 class Objective {
     constructor(image, width, height, point)
     {
@@ -256,18 +287,21 @@ class Player {
 function updateGameState() {
     moveAndDrawObstacles();
     moveAndDrawPlayer();
-    drawCourse();
     drawObjective();
     atObjective();
     hitObstacle();
 }
 
 function atObjective() {
+    //This is a complicated method!  Ask us if you are confused!
+
+    // These make a bounding box of where the goal is
     var objectiveLeft = goal.point.x;
     var objectiveRight = goal.point.x + goal.image.width;
     var objectiveTop = goal.point.y;
     var objectiveBottom = goal.point.y + goal.image.height;
 
+    // This gets bounding box of where the player is
     var points = [
         new Point(player.currentPoint.x, player.currentPoint.y), 
         new Point(player.currentPoint.x + player.image.width, player.currentPoint.y),
@@ -275,10 +309,13 @@ function atObjective() {
         new Point(player.currentPoint.x + player.image.width, player.currentPoint.y + player.image.height)
     ]
 
+    // This loops through the array of points to see if the 
     for(var i = 0; i < 4; i++){
         var point = points[i];
+        // This checks to see if the two bounding boxes overlap
         if(objectiveLeft < point.x && point.x < objectiveRight && objectiveTop < point.y && point.y < objectiveBottom)
         {
+            // This is what happens if the player wins
             stopGame();
             clearCanvas();
             context.font = "72px Arial";
@@ -348,16 +385,6 @@ function moveAndDrawObstacles() {
 
         //draw the obstacle
         drawImage(obstacles[i].image, obstacles[i].currentPoint);
-    }
-}
-
-function drawCourse()
-{
-    for(var i = 0; i < course.length; i++)
-    {
-        var rect = course[i];
-        context.fillStyle = rect.color;
-        context.fillRect(rect.position.x, rect.position.y, rect.width, rect.height);
     }
 }
 
