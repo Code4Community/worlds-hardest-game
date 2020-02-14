@@ -104,7 +104,7 @@ function startGame() {
         The thrid item is the height of the goal image.
         The fourth item is the point where the goal image is drawn.
     */
-    goal = new Objective(goalImageUrl, 125, 500, new Point(1075, 0));
+   goal = new Objective(goalImageUrl, 130, 500, new Point(1070, 0));
 
     // This is the select to switch between levels.  We suggest that you do not mess with this.
     var levelDropdown = document.getElementById("level-select");
