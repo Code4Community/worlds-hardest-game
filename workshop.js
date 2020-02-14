@@ -29,3 +29,4 @@ var losingColor = "blue";
 var goalImageUrl = "./assets/EndZone.png";
 
 // Background image (WIP)
+var backgroundImageUrl = './assets/FootballField.jpg';
