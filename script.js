@@ -38,6 +38,7 @@ function nextLevel() {
 function loadGame() {
     //Sets up the canvas and context.  Links to html.
     canvas = document.getElementById("board");
+    canvas.style.backgroundImage = 'url(' + backgroundImageUrl + ')';
     canvas.width = X_MAX;
     canvas.height = Y_MAX;
     context = canvas.getContext("2d");
