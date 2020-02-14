@@ -20,7 +20,7 @@ var winningText = "TOUCHDOWN!";
 var winningColor = "red";
 
 // Message when you lose
-var losingColor = "You got tackled!";
+var losingText = "You got tackled!";
 
 // Color of message when you lose
 var losingColor = "blue";
