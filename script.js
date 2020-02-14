@@ -6,9 +6,6 @@ const X_MAX = 1200;
 const Y_MIN = 0;
 const Y_MAX = 500;
 
-// Controls the height and width of an obstacle... smaller obstacles might be easier to avoid
-const OBSTACLE_SIZE = 80;
-
 // Global variables for the HTML5 canvas - Removing these will likely break the game
 var canvas;
 var context;
@@ -76,15 +73,6 @@ function startGame() {
     */
 
     /*
-        These are the url's to the images for different parts of the game.
-        You can change them to different image URL's from the internet.
-        Just paste it right in!
-    */
-    var playerLogoUrl = "./assets/OhioStateLogo.jpg";
-    var obstacleLogoUrl = "./assets/MichiganLogo.png";
-    var goalImageUrl = "./assets/EndZone.png"
-
-    /*
         The player is the person that you move around the screen and try to get to the endzone.
 
         The first item after the parentheses is the url of the player, you can change that above.
@@ -93,7 +81,7 @@ function startGame() {
         The fourth item is the speed at which the player moves at.
         The fifth item is the starting point of the player.
     */
-    player = new Player(playerLogoUrl, 80, 80, 2, new Point(10, 10));
+    player = new Player(playerLogoUrl, playerSize, playerSize, playerSpeed, new Point(10, 10));
 
     /*
         The goal is the thing that you are trying to reach.
@@ -122,36 +110,36 @@ function startGame() {
                 The seventh item is the speed in the x direction of the obstacle. You can change this.
                 The eighth item is the speed in the y direction of the obstacle. You can change this.
             */
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(100, 0), 0, .17),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(300, 420), 0, .15),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(600, 0), 0, .13),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(900, 0), 0, .12),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(500, 50), 0, .11)
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(100, 0), 0, .17),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(300, 420), 0, .15),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(600, 0), 0, .13),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(900, 0), 0, .12),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(500, 50), 0, .11)
         ];
     }
     else if (level == 2) {
         obstacles = [
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(100, 0), new Point(1200, 500), new Point(100, 0), .1, .2),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(300, 0), new Point(1200, 500), new Point(300, 0), .1, .2),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(500, 0), new Point(1200, 500), new Point(500, 0), .1, .2),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(700, 0), new Point(1200, 500), new Point(700, 0), .1, .2),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(500, 0), new Point(1200, 500), new Point(500, 0), .1, .2),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(0, 400), new Point(1200, 500), new Point(1000, 400), .5, 0),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(0, 300), new Point(1200, 500), new Point(1000, 300), .5, 0),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, new Point(0, 200), new Point(1200, 500), new Point(1000, 200), .5, 0),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, new Point(100, 0), new Point(1200, 500), new Point(100, 0), .1, .2),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, new Point(300, 0), new Point(1200, 500), new Point(300, 0), .1, .2),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, new Point(500, 0), new Point(1200, 500), new Point(500, 0), .1, .2),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, new Point(700, 0), new Point(1200, 500), new Point(700, 0), .1, .2),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, new Point(500, 0), new Point(1200, 500), new Point(500, 0), .1, .2),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, new Point(0, 400), new Point(1200, 500), new Point(1000, 400), .5, 0),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, new Point(0, 300), new Point(1200, 500), new Point(1000, 300), .5, 0),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, new Point(0, 200), new Point(1200, 500), new Point(1000, 200), .5, 0),
 
         ];
     }
     else if (level == 3) {
         obstacles = [
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(0, 120), 1, 0),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(0, 320), 1, 0),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(100, 0), 0, .75),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(300, 0), 0, .8),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(500, 0), 0, .85),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(700, 0), 0, .9),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(900, 0), 0, .95),
-            new Obstacle(obstacleLogoUrl, OBSTACLE_SIZE, OBSTACLE_SIZE, topLeftOriginPoint, defaultEndPoint, new Point(1100, 0), 0, 1),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(0, 120), 1, 0),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(0, 320), 1, 0),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(100, 0), 0, .75),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(300, 0), 0, .8),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(500, 0), 0, .85),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(700, 0), 0, .9),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(900, 0), 0, .95),
+            new Obstacle(obstacleLogoUrl, obstacleSize, obstacleSize, topLeftOriginPoint, defaultEndPoint, new Point(1100, 0), 0, 1),
         ];
     }
 
@@ -325,9 +313,9 @@ function atObjective() {
                 document.getElementById('nextLevelButton').style.display = "inline";
             }
             context.font = "72px Arial";
-            context.fillStyle = "red";
+            context.fillStyle = winningColor;
             context.textAlign = "center";
-            context.fillText("TOUCHDOWN!", canvas.width / 2, canvas.height / 2);
+            context.fillText(winningText, canvas.width / 2, canvas.height / 2);
         }
     }
 }
@@ -352,9 +340,9 @@ function hitObstacle() {
                 stopGame();
                 clearCanvas();
                 context.font = "72px Arial";
-                context.fillStyle = "blue";
+                context.fillStyle = losingColor;
                 context.textAlign = "center";
-                context.fillText("You got tackled!", canvas.width / 2, canvas.height / 2);
+                context.fillText(losingText, canvas.width / 2, canvas.height / 2);
             }
         }
     }
