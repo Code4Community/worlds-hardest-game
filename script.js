@@ -348,7 +348,6 @@ function hitObstacle() {
         for (var i = 0; i < 4; i++) {
             var point = points[i];
             if (obstacleLeft < point.x && point.x < obstacleRight && obstacleTop < point.y && point.y < obstacleBottom) {
-                debugger
                 stopGame();
                 clearCanvas();
                 context.font = "72px Arial";
